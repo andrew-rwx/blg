@@ -1,0 +1,11 @@
+
+
+h1{
+    text-align: center;
+    color: greenyellow;
+}
+
+/*Il componente <Link /> viene tradotto come un a nel css*/
+a{  
+    text-decoration: none;
+}

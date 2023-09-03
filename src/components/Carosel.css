@@ -1,0 +1,21 @@
+
+.carosel-imgs{
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.carosel-imgs>img{
+    width: 200px;
+    height: 200px;
+}
+
+.carosel-imgs>button{
+    color:white;
+    background-color:  rgb(78, 77, 77);
+    border:1.5px solid orange;
+    width: 20px;
+    height: 200px;
+}
