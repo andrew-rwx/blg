@@ -1,0 +1,6 @@
+.card-explorer{
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}

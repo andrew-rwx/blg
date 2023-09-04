@@ -1,21 +1,23 @@
 ul{
-    margin-top: 150px;
+    /* margin-top: 150px; */
+    position: sticky;
 }
 
 
 li{
-    margin:20px;
-    
+    padding: 20px;
 }
 
 #ricette-wrapper{
     display: flex;
+    align-items: center;
     gap:200px;
+    min-height: 100vh;
 }
 
 #ricette-card-wrapper{
-    margin-top: 150px;
     display: flex;
     gap:20px;
     flex-wrap: wrap;
+    justify-content: center;
 }

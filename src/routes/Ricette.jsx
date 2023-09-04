@@ -27,7 +27,7 @@ function Ricette(){
                 
             </ul>
 
-            <div id="ricette-card-wrapper">
+            <div>
                 <Outlet/>
             </div>
             

@@ -12,7 +12,7 @@ function Homepage(){
                 <div className="card-wrapper">
                     <Link to="/ricette">
                     <Card
-                        immagine="toast.jpeg"
+                        src="/toast.jpeg"
                         alt="Una ricetta gustosa"
                         titolo="Ricette"
                         testo="Qui troverai tante ricette interessanti,buone e assolutamente vegane."
@@ -25,7 +25,7 @@ function Homepage(){
                 </div>
                 <div className="card-wrapper">
                     <Card
-                        immagine="mylife.jpg"
+                        src="mylife.jpg"
                         alt="La mia storia"
                         titolo="La mia storia"
                         testo="Qui troverai di tutto e di più su di me"/>
