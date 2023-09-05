@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 
 import{
   createBrowserRouter,
+  parsePath,
   RouterProvider,
   useLoaderData,
   useParams
@@ -12,7 +13,6 @@ import './index.css';
 import Homepage from './routes/Homepage.jsx'
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
-import RecipiesCardExplorer from './components/RecipiesCardExplorer';
 import * as ricettario from './ricettario.js';
 
 const router=createBrowserRouter([
@@ -34,10 +34,9 @@ const router=createBrowserRouter([
         },
         path:"/ricette/:id",
         element:
-        <>
-          <RecepiesCard/>
-          <RecipiesCardExplorer/>
-        </>
+          <RecepiesCard 
+          />
+        
 
       },
     ]

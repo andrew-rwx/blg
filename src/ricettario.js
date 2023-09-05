@@ -37,12 +37,18 @@ const primipiatti=[
     {titolo: "bucatini8",
     src: "/mylife.jpg",
     alt :"life",
-    testo:"Questa ricetta..."},
+    testo:"Questa ricetta..."}, 
 
     {titolo: "bucatini9",
     src: "/mylife.jpg",
     alt :"life",
     testo:"Questa ricetta..."},
+    {titolo: "bucatini10",
+    src: "/mylife.jpg",
+    alt :"life",
+    testo:"Questa ricetta..."},
+  
+
 
     
     
@@ -50,7 +56,8 @@ const primipiatti=[
 
 ]
 
-const secondipiatti=[{
+const secondipiatti=[
+    {
     titolo: "tofu",
     src: "/mylife.jpg",
     alt :"life",
@@ -60,6 +67,8 @@ const secondipiatti=[{
     src: "/mylife.jpg",
     alt :"life",
     testo:"Questa ricetta..."},
+    
+    
 ]
 
 const contorni=[{

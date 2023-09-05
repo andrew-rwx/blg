@@ -1,19 +1,29 @@
-import{ useLoaderData }from "react-router-dom";
-import { useState } from "react";
+import{ unstable_HistoryRouter, useLoaderData, useLocation, useNavigate, useParams }from "react-router-dom";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import CardExplorer from "./CardExplorer";
 
 
 function RecepiesCard(){
-    const ricetteScelte=useLoaderData();
-    const ricetteLen= ricetteScelte.length;
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const cardPerSlide = 3; //TODO risolvere bug in CardExplorer: quando il ricetteLen è divisibile per cardPerSlide genera una slide in più vuota
-
+    const [currentIndex, setCurrentIndex] = useState(1);
     function handleSetCurrentIndex(newIndex){
-        setCurrentIndex(newIndex);
-    }
-    const cardIndex = currentIndex*cardPerSlide;
+      setCurrentIndex(newIndex);
+  }
+
+  const ricetteScelte=useLoaderData();
+  const ricetteLen= ricetteScelte.length;
+  const cardPerSlide = 4; //TODO risolvere bug in CardExplorer: quando il ricetteLen è divisibile per cardPerSlide genera una slide in più vuota
+
+    //riazzero lo stato ad ogni cambio di route per la corretta gestione
+  const location=useLocation();
+  useEffect(()=>{
+      handleSetCurrentIndex(1);
+    },[location.pathname]
+  );
+
+    //--------//
+
+    const cardIndex =(currentIndex* cardPerSlide)- cardPerSlide;
     const ricetteVisualizzate = ricetteScelte.slice(cardIndex, cardIndex + cardPerSlide);
 
     return(<div className="ricette-outlet-container">
@@ -33,7 +43,7 @@ function RecepiesCard(){
 
                   <CardExplorer 
                     setIndex={handleSetCurrentIndex}
-                    ricetteLen={ricetteLen}
+                    cardsLen={ricetteLen}
                     cardPerSlide={cardPerSlide}
                   />
             </div>
