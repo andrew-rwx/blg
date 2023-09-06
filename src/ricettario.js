@@ -1,3 +1,10 @@
+const colazione=[
+    {titolo: "pancake",
+    src: "/mylife.jpg",
+    alt :"life",
+    testo:"Questa ricetta..."}
+]
+
 const primipiatti=[
     {titolo: "bucatini1",
     src: "/mylife.jpg",
@@ -111,5 +118,5 @@ alt :"life",
 testo:"Questa ricetta..."},
 ]
 
-export {primipiatti,secondipiatti,contorni,dolci,spuntini};
+export {colazione,primipiatti,secondipiatti,contorni,dolci,spuntini};
 

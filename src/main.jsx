@@ -28,7 +28,8 @@ const router=createBrowserRouter([
       { 
         loader:({params})=>{
           const {id}=params;
-          const ricette_scelte=ricettario[id]; /* il [] permette di accedere usando variabili. Non posso usare
+          const ricette_scelte=ricettario[id];
+          console.log(ricette_scelte); /* il [] permette di accedere usando variabili. Non posso usare
                                                   ricettario.id */
           return ricette_scelte
         },

@@ -29,6 +29,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color:bisque;
+  background-image: url("/background1.png");
+  background-repeat: repeat-x;
+  background-size: contain;
 }
 
 h1 {
@@ -55,16 +58,4 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/*@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-/*
+

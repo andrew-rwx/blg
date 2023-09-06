@@ -6,22 +6,26 @@ function Ricette(){
         <div id="ricette-wrapper">
             <ul>
                 <li>
-                    <Link to="/ricette/primipiatti">Primi Piatti</Link>
+                    <Link to="/ricette/colazione">Colazione ☕</Link>
+                </li>
+                
+                <li>
+                    <Link to="/ricette/primipiatti">Primi Piatti 🍜</Link>
                 </li>
 
                 <li>
-                    <Link to="/ricette/secondipiatti">Secondi Piatti</Link>
+                    <Link to="/ricette/secondipiatti">Secondi Piatti 🧆</Link>
                 </li>
                 <li>
-                    <Link to="/ricette/contorni">Contorni</Link>
+                    <Link to="/ricette/contorni">Contorni 🥗</Link>
+                </li> 
+
+                <li>
+                    <Link to="/ricette/dolci">Dolci 🍨</Link>
                 </li>
 
                 <li>
-                    <Link to="/ricette/dolci">Dolci</Link>
-                </li>
-
-                <li>
-                    <Link to="/ricette/spuntini">Spuntini</Link>
+                    <Link to="/ricette/spuntini">Spuntini 🍉</Link>
                 </li>
 
                 
