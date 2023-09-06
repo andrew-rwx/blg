@@ -13,9 +13,10 @@
 }
 
 .carosel-imgs>button{
-    color:white;
-    background-color:  rgb(78, 77, 77);
-    border:1.5px solid orange;
+    font-size: 1.5em;
+    color: var(--melon);
+
+    border: 3px solid var(--persian-green);
     width: 20px;
     height: 200px;
 }

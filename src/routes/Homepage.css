@@ -2,10 +2,22 @@
 
 h1{
     text-align: center;
-    color: greenyellow;
+    color: var(--wenge);
 }
 
 /*Il componente <Link /> viene tradotto come un a nel css*/
 a{  
     text-decoration: none;
+}
+
+.home-title {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.home-title-img-left {
+    
 }

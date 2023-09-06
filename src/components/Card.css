@@ -2,7 +2,7 @@
 #cards-container{
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    align-items: center;
 }
 
 .card-wrapper{
@@ -15,9 +15,11 @@
     max-height: 600px;
     min-height:390px;
     padding: 1em;
-    border-top: solid orange 2.5px;
-    border-bottom: solid orange 5px;
-    background-color: rgb(78, 77, 77);
+    border-top: solid var(--persian-green) 1em;
+    border-bottom: solid var(--persian-green) 2px;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    background-color: var(--melon);
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
