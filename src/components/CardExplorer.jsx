@@ -28,7 +28,7 @@ function CardExplorer( props ) {
     const buttons=[]
     for(let i=1; i <= numSlides; i++){
         buttons.push(
-             <button key={i} className={`my-button${nButtonClicked[i] ? 'clicked' : ''}`}
+             <button key={i} className={`my-button${nButtonClicked[i] ? '-clicked' : ''}`}
                  onClick={() => {props.setIndex(i);
                                  handleClick(i)}}>
                  {i}

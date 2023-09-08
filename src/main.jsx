@@ -42,7 +42,7 @@ const router=createBrowserRouter([
 
       },
 
-      {path:"/ricette/:id/:id-ricetta",
+      {path:"/ricette/:id/api/:id-ricetta",
       loader: ()=>{},
        element:<SelectedRecepies/>}
    

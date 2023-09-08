@@ -5,9 +5,9 @@
     gap: 4px;
 }
 
-button{
+.my-button,.my-button-clicked{
     margin-bottom: 10px;
 }
-.my-buttonclicked{
+.my-button-clicked{
     background-color: burlywood;
 }
