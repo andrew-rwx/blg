@@ -17,6 +17,7 @@
     color: var(--melon);
 
     border: 3px solid var(--persian-green);
-    width: 20px;
+    width: 30px;
     height: 200px;
+    text-align: center;
 }

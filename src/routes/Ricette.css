@@ -3,7 +3,6 @@ ul{
     width: 285px;
     background-color: burlywood;
     border:solid 3px white;
-    margin-left: 30px;
     
 }
 
@@ -12,16 +11,47 @@ li{
     padding: 20px;
 }
 
-#ricette-wrapper{
-    display: flex;
-    align-items: center;
-    gap:20vw;
-    min-height: 100vh;
+
+/*css del Link*/
+.ricette-nav>a{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    text-align: center;
+    background-color: var(--persian-green);
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 
+.ricette-nav>p{
+    margin-bottom: -14px;
+    text-align: left;
+    font-size: 1.3em;
+    color: gold;
+}
+
+/*div livello1*/
+.ricette-nav{
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/*div livello1*/
 #ricette-card-wrapper{
     margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
     gap:10px;
+}
+
+/*div livello2*/
+#ricette-wrapper{
+    display: flex;
+    align-items: center;
+    gap:100px;
 }

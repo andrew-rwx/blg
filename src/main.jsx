@@ -13,6 +13,7 @@ import './index.css';
 import Homepage from './routes/Homepage.jsx'
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
+import SelectedRecepies from './components/SelectedRecepies';
 import * as ricettario from './ricettario.js';
 
 const router=createBrowserRouter([
@@ -40,6 +41,11 @@ const router=createBrowserRouter([
         
 
       },
+
+      {path:"/ricette/:id/:id-ricetta",
+      loader: ()=>{},
+       element:<SelectedRecepies/>}
+   
     ]
   }
 

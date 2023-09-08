@@ -1,17 +1,6 @@
-
-#cards-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card-wrapper{
-    display: flex;
-    gap: 2em;
-}
-
+/*div lv1*/
 .card{
-    width: 300px;
+    width: 250px;
     max-height: 600px;
     min-height:390px;
     padding: 1em;
@@ -19,6 +8,8 @@
     border-bottom: solid var(--persian-green) 2px;
     border-top-left-radius: 5%;
     border-top-right-radius: 5%;
+    border-bottom-left-radius: 3%;
+    border-bottom-right-radius: 3%;
     background-color: var(--melon);
     margin-left: 10px;
     margin-right: 10px;
@@ -37,4 +28,23 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+}
+
+
+
+
+/*div lv2*/
+.card-wrapper{
+    display: flex;
+    gap: 2em;
+}
+
+
+
+/*div lv3*/
+#cards-container{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
