@@ -2,6 +2,7 @@ import{ unstable_HistoryRouter, useLoaderData, useLocation, useNavigate, usePara
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import CardExplorer from "./CardExplorer";
+import { Link } from "react-router-dom";
 
 
 function RecepiesCard(){
@@ -11,14 +12,16 @@ function RecepiesCard(){
   }
 
   const ricetteScelte=useLoaderData();
+  console.log(ricetteScelte);
   const ricetteLen= ricetteScelte.length;
   const cardPerSlide = 4; //TODO risolvere bug in CardExplorer: quando il ricetteLen è divisibile per cardPerSlide genera una slide in più vuota
 
     //riazzero lo stato ad ogni cambio di route per la corretta gestione
   const location=useLocation();
+  const currentUrl=location.pathname;
   useEffect(()=>{
       handleSetCurrentIndex(1);
-    },[location.pathname]
+    },[currentUrl]
   );
 
     //--------//
@@ -30,6 +33,7 @@ function RecepiesCard(){
               <div id="ricette-card-wrapper">
                 {
                     ricetteVisualizzate.map((ricetta, index)=>(
+                        <Link to={`${currentUrl}/${ricetta._id}`}key={{index}}>
                         <Card
                         key={index}
                         titolo={ricetta.titolo}
@@ -37,6 +41,7 @@ function RecepiesCard(){
                         alt={ricetta.alt}
                         testo={ricetta.testo}
                         />
+                        </Link> 
                     ))
                 }
               </div>
@@ -46,8 +51,8 @@ function RecepiesCard(){
                     cardsLen={ricetteLen}
                     cardPerSlide={cardPerSlide}
                   />
-            </div>
-          )
+          </div>
+        )
   }
 
   export default RecepiesCard;

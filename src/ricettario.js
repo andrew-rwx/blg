@@ -21,10 +21,10 @@ const primipiatti=[
     alt :"life",
     testo:"Questa ricetta..."},
 
-    {titolo: "bucatini4",
-    src: "/mylife.jpg",
-    alt :"life",
-    testo:"Questa ricetta..."},
+    {"titolo": "bucatini4",
+    "src": "/mylife.jpg",
+    "alt" :"life",
+    "testo":"Questa ricetta..."},
 
     {titolo: "bucatini5",
     src: "/mylife.jpg",
