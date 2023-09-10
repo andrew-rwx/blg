@@ -24,7 +24,9 @@ const primipiatti=[
     {"titolo": "bucatini4",
     "src": "/mylife.jpg",
     "alt" :"life",
-    "testo":"Questa ricetta..."},
+    "introduzione":"Questa ricetta...",
+    "ingredienti":"200g di...",
+    "preparazione":"Tagliare le verure a dadini..."},
 
     {titolo: "bucatini5",
     src: "/mylife.jpg",

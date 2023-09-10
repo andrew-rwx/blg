@@ -45,13 +45,6 @@ const router=createBrowserRouter([
   },
 
   {path:"/ricette/:id/:id_ricetta",
-      loader: async({params})=>{
-        const id=params.id;
-        const id_ricetta=params.id_ricetta;
-        const data=await fetch(`/api/${id}/${id_ricetta}`)
-        return data;
-
-      },
        element:<SelectedRecepie/>
   }
 

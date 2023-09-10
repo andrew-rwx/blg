@@ -8,7 +8,7 @@ const ricetta_schema=new mongoose.Schema({
 })
 
 const Colazione=new mongoose.model("breakfast",ricetta_schema);
-const Primi=new mongoose.model("fistplate",ricetta_schema);
+const Primi=new mongoose.model("firstplate",ricetta_schema);
 const Secondi=new mongoose.model("secondplate",ricetta_schema);
 const Contorni=new mongoose.model("sideplate",ricetta_schema);
 const Dolci=new mongoose.model("sweet",ricetta_schema);

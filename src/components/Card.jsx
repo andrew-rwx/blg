@@ -5,7 +5,7 @@ function Card(props){
     <div className="card">
         <h2>{props.titolo}</h2>
         <div id="card-img-wrapper"><img src={props.src} alt={props.alt} /></div>
-        <p>{props.testo}</p>
+        <p>{props.introduzione}</p>
     </div>
     )
 }

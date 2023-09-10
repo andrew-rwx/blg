@@ -1,12 +1,16 @@
-import { useLoaderData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 function SelectedRecepie(){
-    const target_recepies=useLoaderData();
-    console.log(target_recepies);
+    const location=useLocation();
+    const ricetta=location.state.ricetta;
+    console.log(ricetta);
     return(
         <div>
-            <h1>{target_recepies.titolo}</h1>
+            <div>
+                <h1>{ricetta.titolo}</h1>
+            </div>
+            <img src={ricetta.src} alt={ricetta.alt}></img>
         </div>
     )
 }
