@@ -1,46 +1,24 @@
 import express  from "express";
-import mongoose from "mongoose";
 import 'dotenv/config';
-import module_helper from "./model_dictionary.js";
+import dbConnect from "./db/dbconnect.js";
+import session from "express-session";
+import session_obj from "./db/session_obj.js";
+import api_router from "./routes/router-api.js";
 
+const app=express();
+app.use(express.static("/public"));
+app.use('/api',api_router);//router
 
-
-// Carica le variabili d'ambiente
-const app=express()
-app.use(express.static("/public"))
-
-const serverport=3000;
+const server_port=process.env.server_port;//env port
 async function StartServer(){
-    const DB_URI=process.env.DB_URI;
     try{
-        await mongoose.connect(DB_URI,{ useNewUrlParser: true,
-                                        useUnifiedTopology:true} );
-        await app.listen(serverport,()=>(console.log("Server in ascolto")))
+            await dbConnect();
+            app.use(session(session_obj));
+            app.listen(server_port,()=>(console.log("Server in ascolto")));
         }
     catch(e){
         console.log(e);
     }
-
-
-
-    /*routes DATA*/
-    app.get('/api/:tiporicetta',async(req,res)=>{
-        //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
-        const tipo_ricetta=req.params.tiporicetta;
-        const modello=module_helper[tipo_ricetta];
-        
-        //ottengo i dati associati tramite query
-        try{
-            const tipo_ricetta_data=await modello.find({});
-            res.json(tipo_ricetta_data);
-        }
-        catch(e){
-            console.log(e);
-        }
-
-    });
-
 }
-
 
 StartServer();

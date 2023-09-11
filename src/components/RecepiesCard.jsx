@@ -12,6 +12,7 @@ function RecepiesCard(){
   }
 
   const ricetteScelte=useLoaderData();
+  console.log(ricetteScelte);
   const ricetteLen= ricetteScelte.length;
   const cardPerSlide = 4; //TODO risolvere bug in CardExplorer: quando il ricetteLen è divisibile per cardPerSlide genera una slide in più vuota
 

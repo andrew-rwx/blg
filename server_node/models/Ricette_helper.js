@@ -1,6 +1,6 @@
-import { Colazione, Contorni, Dolci, Primi, Secondi, Spuntini } from "./tipi_ricettaSchema.js";
+import { Colazione, Contorni, Dolci, Primi, Secondi, Spuntini } from "./Ricette.js";
 
-const module_helper={
+const ricette_helper={
     "colazione" : Colazione,
     "primipiatti" : Primi,
     "secondipiatti" : Secondi,
@@ -10,4 +10,4 @@ const module_helper={
 };
 
 
-export default module_helper;
+export default ricette_helper;
