@@ -11,17 +11,18 @@ import Homepage from './routes/Homepage.jsx'
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
 import SelectedRecepie from './components/SelectedRecepies';
+import Registrati from './routes/Registrati';
 
 
 const router=createBrowserRouter([
   {
-    path:"/",
-    element:<Homepage />
+    path: "/",
+    element:  <Homepage />
 
   },
   {
-    path:"/ricette",
-    element:<Ricette/>,
+    path: "/ricette",
+    element:  <Ricette/>,
     children:[
       { 
         loader:async({params})=>{
@@ -34,18 +35,22 @@ const router=createBrowserRouter([
             console.log(e);
           }
         },
-        path:"/ricette/:id",
-        element:
-          <RecepiesCard 
-          />
+        path: "/ricette/:id",
+        element:  <RecepiesCard />
       }
     
     ]
 
   },
 
-  {path:"/ricette/:id/:id_ricetta",
-       element:<SelectedRecepie/>
+  { path: "/ricette/:id/:id_ricetta",
+    element:  <SelectedRecepie/>
+  },
+
+  {
+    path: "/registrati",
+    element:  <Registrati/>
+
   }
 
 ])

@@ -4,10 +4,13 @@ import dbConnect from "./db/dbconnect.js";
 import session from "express-session";
 import session_obj from "./db/session_obj.js";
 import api_router from "./routes/router-api.js";
+import error_handler from "./middleware/error_handler.js";
 
 const app=express();
 app.use(express.static("/public"));
+app.use(express.urlencoded({extended:true}));
 app.use('/api',api_router);//router
+app.use(error_handler);
 
 const server_port=process.env.server_port;//env port
 async function StartServer(){

@@ -1,4 +1,3 @@
-import Nav from "../components/Nav";
 import Card from  '../components/Card';
 import Carosel from "../components/Carosel";
 import "./Homepage.css"
@@ -11,6 +10,7 @@ function Homepage(){
                 <h1>La ninfea di Raganella</h1>
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
             </div>
+            <Link to="/registrati">Registrati</Link>
             <div id="cards-container">
                 <div className="card-wrapper">
                     <Link to="/ricette">

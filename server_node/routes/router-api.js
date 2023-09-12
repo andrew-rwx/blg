@@ -1,6 +1,6 @@
 import express from "express";
-import ricette_helper from "../models/ricette_helper";
-import registration from "../controllers/registration";
+import ricette_helper from "../models/ricette_helper.js";
+import registration from "../controllers/registration.js";
 
 const router=express.Router();
 
@@ -23,8 +23,9 @@ router.get('/:tiporicetta',async(req,res)=>{
 
 router.post("/registrazione",async(req,res)=>{
     const user_data={
-        input_username:req.body.username,
-        input_password:req.body.password
+        username:req.body.username,
+        password:req.body.password,
+        email:req.body.email
     }
     const response=await registration(user_data);
     res.status(200).json({result: response});
