@@ -1,16 +1,22 @@
+import { useEffect, useState } from 'react';
 import Card from  '../components/Card';
 import Carosel from "../components/Carosel";
 import "./Homepage.css"
 import { Link } from "react-router-dom";
 function Homepage(){
-    return(
+
+    //[] una volta per render verrà chiamato useEffect
+        return(
         <>   
             <div className="home-title">
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
                 <h1>La ninfea di Raganella</h1>
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
             </div>
-            <Link to="/registrati">Registrati</Link>
+        
+                <Link to="/registrati">Registrati</Link>
+              
+            
             <div id="cards-container">
                 <div className="card-wrapper">
                     <Link to="/ricette">

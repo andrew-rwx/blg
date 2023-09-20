@@ -1,39 +1,45 @@
-
 import bcrypt from "bcrypt"
 import User from "../models/User.js"
+import CustomError from "../utils/CustomError.js";
 
 async function registration(user_data){
-const input_username=user_data.username;
-const input_password=user_data.password;
-const input_email=user_data.email;
+const {username,password,email}=user_data;
 const saltRounds=10;
+throw new Error("Error");
+    if(password.length<8){
+        throw new CustomError("La password deve contenere almeno 8 caratteri",400);
+    }
 
-if(input_password.length<8){
-    throw new Error("La password deve contenere almeno 8 caratteri")
+
+try{
+    const user_found=await searchUserInDb(username);
+
+
+    if(user_found){
+        throw new CustomError("Username già utilizzato",400);
+    }
+    else{
+        const hashed_psw=await bcrypt.hash(password,saltRounds);
+        const user=new User({
+            username:username,
+            password:hashed_psw,
+            email:email,
+            comments:{}})
+
+        await user.save();
+    }
+}
+catch(err){
+    next(err);
 }
 
-const user_found=await searchUserInDb(input_username);
 
-if(user_found){
-    throw new Error("Nome utente già utilizzato");
-}
-else{
-    const hashed_psw=await bcrypt.hash(input_password,saltRounds);
-    const user=new User({
-        username:input_username,
-        password:hashed_psw,
-        comments:{}})
-
-    await user.save();
-}
-
-return "Registrazione avvenuta con successo!"
 
 }
 
 
-async function searchUserInDb(input_username){
-const user_found=await User.findOne({username: input_username});
+async function searchUserInDb(username){
+const user_found=await User.findOne({username:username});
 return user_found;
 }
 

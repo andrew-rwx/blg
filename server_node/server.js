@@ -5,22 +5,25 @@ import session from "express-session";
 import session_obj from "./db/session_obj.js";
 import api_router from "./routes/router-api.js";
 import error_handler from "./middleware/error_handler.js";
+import passport from "passport";
 
 const app=express();
 app.use(express.static("/public"));
 app.use(express.urlencoded({extended:true}));
 app.use('/api',api_router);//router
-app.use(error_handler);
+app.use(error_handler);//error_handling middleware
 
-const server_port=process.env.server_port;//env port
-async function StartServer(){
+const PORT=process.env.PORT;//env port
+async function StartServer(next){
     try{
             await dbConnect();
             app.use(session(session_obj));
-            app.listen(server_port,()=>(console.log("Server in ascolto")));
+            app.use(passport.initialize());
+            app.use(passport.session());
+            app.listen(PORT,()=>(console.log("Server in ascolto")));
         }
-    catch(e){
-        console.log(e);
+    catch(err){
+        next(err);
     }
 }
 

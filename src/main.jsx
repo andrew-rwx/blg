@@ -7,7 +7,8 @@ import{
 }from "react-router-dom";
 
 import './index.css';
-import Homepage from './routes/Homepage.jsx'
+import Homepage from './routes/Homepage.jsx';
+import ErrorPage from './routes/ErrorPage';
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
 import SelectedRecepie from './components/SelectedRecepies';
@@ -17,8 +18,22 @@ import Registrati from './routes/Registrati';
 const router=createBrowserRouter([
   {
     path: "/",
-    element:  <Homepage />
+    element:  <Homepage />,
 
+  },
+
+  { loader:async()=>{   
+      try{
+            const error_data=await fetch("/api/error");
+      }
+      catch(e){
+        console.log(e)
+      };
+    },
+    
+    path:"/errorpage",
+    element:<ErrorPage/>,
+    
   },
   {
     path: "/ricette",
