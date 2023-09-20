@@ -1,18 +1,21 @@
 import express from "express";
+import 'dotenv/config';
 import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
 import passport from "../config/passport.js";
 
-
+const PORT=process.env.PORT_FRONT;
 const router=express.Router();
 router.post('/error',async(req,res,next)=>{
     try{
-        const {error_response}=req.body;//contiene il body della fetch
-        await fetch('/errorpage');
+        const error_response =req.body;//contiene il body della fetch
+        console.log("waiting")
+        await fetch(`http://localhost:${PORT}/errorpage`);
+        console.log("done")
         res.status(200).json(error_response);
     }
     catch(err){
-        next(err);
+        console.error(err);
     }
    
                             

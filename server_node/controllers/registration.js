@@ -30,7 +30,7 @@ try{
     }
 }
 catch(err){
-    next(err);
+    throw err;
 }
 
 

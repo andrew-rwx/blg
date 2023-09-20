@@ -10,10 +10,11 @@ import passport from "passport";
 const app=express();
 app.use(express.static("/public"));
 app.use(express.urlencoded({extended:true}));
+app.use(express.json());
 app.use('/api',api_router);//router
 app.use(error_handler);//error_handling middleware
 
-const PORT=process.env.PORT;//env port
+const PORT=process.env.PORT_BACK;//env port
 async function StartServer(next){
     try{
             await dbConnect();

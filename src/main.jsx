@@ -23,8 +23,11 @@ const router=createBrowserRouter([
   },
 
   { loader:async()=>{   
-      try{
+      try{  
+            console.log("Hi");
             const error_data=await fetch("/api/error");
+            console.log("done");
+            return error_data;
       }
       catch(e){
         console.log(e)
