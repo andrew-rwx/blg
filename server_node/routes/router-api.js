@@ -26,7 +26,6 @@ router.get('/:tiporicetta',async(req,res,next)=>{
 
 
 router.post("/registrazione",async(req,res,next)=>{
-    console.log("hi")
     const user_data={
         username:req.body.username,
         password:req.body.password,

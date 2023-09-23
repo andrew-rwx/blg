@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function Registrati(){
+    const [errorState, setErrorState] = useState();
+
     const [utente,setUtente]=useState({
         username: '',
         password:'',
@@ -27,11 +30,18 @@ function Registrati(){
             },
             body: JSON.stringify(utente)
         });
-        if(!response.ok){
+        try{
+            if(!response.ok){
             
-            const error_message=await response.json();
-            console.log(error_message);
-            throw new Response(error_message,{status:response.status});
+                const error_message=await response.json();
+                throw new Error(error_message);        
+        }
+        
+        }
+        catch(err){
+            setErrorState(()=>{
+                throw err;
+            });
         }
 
     }

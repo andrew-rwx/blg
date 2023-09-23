@@ -4,7 +4,6 @@ import CustomError from "../utils/CustomError.js";
 
 async function registration(user_data){
 const {username,password,email}=user_data;
-console.log("ciao");
 const saltRounds=10;
 throw new Error("Error");
     if(password.length<8){

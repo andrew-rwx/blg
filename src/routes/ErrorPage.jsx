@@ -4,7 +4,7 @@ function ErrorPage(){
     const error=useRouteError();
     const error_structure=(
         <div className='error-page'>
-            <img src={`Error${error.status}.jpg`} alt={error.error_message}/>
+            <img src={`Error${error.status}.jpg`} alt={error.message}/>
             <Link to='/'>Torna alla Homepage</Link>
         </div>
     )

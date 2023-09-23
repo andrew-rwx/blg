@@ -1,0 +1,14 @@
+.error-comp{
+    background-color: white;
+}
+
+.error-component{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-component img{
+    max-height: 90vh;
+}

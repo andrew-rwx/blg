@@ -3,7 +3,6 @@ import CustomError from '../utils/CustomError.js';
 const PORT=process.env.PORT_BACK;
 
 async function error_handler(error,req,res,next){
-        console.log("ciao")
 
         if (error instanceof CustomError) { //TODO
             const status_code=error.status;
@@ -11,7 +10,6 @@ async function error_handler(error,req,res,next){
         }
         else{
             
-                console.log("trigghered");
                 const error_response={
                     status:'500',
                     message:'Ooops,qualcosa è andato storto!'
