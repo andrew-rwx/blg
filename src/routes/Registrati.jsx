@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Registrati(){
     const [utente,setUtente]=useState({
         username: '',
@@ -6,6 +8,7 @@ function Registrati(){
         email:''
     })
 
+    const navigate=useNavigate();
     function handleInputChange(event){
         const{name,value}=event.target;
         setUtente({
@@ -14,8 +17,27 @@ function Registrati(){
 
         })
     };
+
+    async function handleSubmit(event){
+        event.preventDefault();
+        const response=await fetch("/api/registrazione",{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(utente)
+        });
+        if(!response.ok){
+            
+            const error_message=await response.json();
+            console.log(error_message);
+            throw new Response(error_message,{status:response.status});
+        }
+
+    }
+            
     return(
-            <form  className="registrazione-form" action="/api/registrazione" method="post">
+            <form  className="registrazione-form" action="/api/registrazione" method="post" onSubmit={handleSubmit}>
                 <label  htmlFor="user" >Username:</label>
                 <input
                     type="text"

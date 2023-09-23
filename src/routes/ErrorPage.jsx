@@ -1,12 +1,19 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLocation, useRouteError } from "react-router-dom";
 
 function ErrorPage(){
-    const error_data=useLoaderData();
-    console.log(error_data);
-    return( <div className="error-page">
-                <h1>{`Error:${error_data.status}`}</h1>
-                <p>{error_data.message}</p>
-           </div>
+    const error=useRouteError();
+    const error_structure=(
+        <div className='error-page'>
+            <img src={`Error${error.status}.jpg`} alt={error.error_message}/>
+            <Link to='/'>Torna alla Homepage</Link>
+        </div>
     )
+    {error.status===404?
+        error_structure
+        :    
+        error_structure
+    
+
+    }
 }
 export default ErrorPage;

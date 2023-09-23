@@ -6,19 +6,23 @@ import{
   RouterProvider
 }from "react-router-dom";
 
-import './index.css';
-import Homepage from './routes/Homepage.jsx';
+
+import ErrorBoundary from './components/ErrorBoundary';
+import CompErr from './components/CompErr';
 import ErrorPage from './routes/ErrorPage';
+import Homepage from './routes/Homepage.jsx';
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
 import SelectedRecepie from './components/SelectedRecepies';
 import Registrati from './routes/Registrati';
+import PaginaPersonale from './routes/PaginaPersonale';
+import './index.css';
 
 
 const router=createBrowserRouter([
   {
     path: "/",
-    element:  <Homepage />,
+    element:  <ErrorBoundary fallback={<CompErr/>}><Homepage /></ErrorBoundary>,
 
   },
 
@@ -46,29 +50,43 @@ const router=createBrowserRouter([
         loader:async({params})=>{
           const id=params.id;
           try{
-            const data=await fetch(`/api/${id}`);
-            return data;
+            const response=await fetch(`/api/${id}`);
+            if(!response.ok){
+              const error_message=await response.json();
+              throw new Response(error_message,{status:response.status});
+            }
+            else{
+              const data=await response.json();
+              return data;
+            }
           }
-          catch(e){
-            console.log(e);
-          }
-        },
-        path: "/ricette/:id",
-        element:  <RecepiesCard />
+          catch(err){
+            throw new Response(err,{status:err.status});
+          }  
+      },
+        path: '/ricette/:id',
+        element:  <RecepiesCard />,
+        errorElement:<ErrorPage/>
       }
     
     ]
 
   },
 
-  { path: "/ricette/:id/:id_ricetta",
+  { path: '/ricette/:id/:id_ricetta',
     element:  <SelectedRecepie/>
+  }, 
+
+  {
+    path: '/registrati',
+    element:  <ErrorBoundary fallback={<CompErr/>}><Registrati/></ErrorBoundary>,
+    errorElement:<ErrorPage/>
+
   },
 
   {
-    path: "/registrati",
-    element:  <Registrati/>
-
+    path:'/paginapersonale/:id',
+    element:<PaginaPersonale/>
   }
 
 ])

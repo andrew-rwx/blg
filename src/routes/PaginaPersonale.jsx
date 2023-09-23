@@ -5,3 +5,5 @@ function PaginaPersonale(){
         </div>
     )
 }
+
+export default PaginaPersonale;

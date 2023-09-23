@@ -6,20 +6,7 @@ import passport from "../config/passport.js";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
-router.post('/error',async(req,res,next)=>{
-    try{
-        const error_response =req.body;//contiene il body della fetch
-        console.log("waiting")
-        await fetch(`http://localhost:${PORT}/errorpage`);
-        console.log("done")
-        res.status(200).json(error_response);
-    }
-    catch(err){
-        console.error(err);
-    }
-   
-                            
-})
+
 
 router.get('/:tiporicetta',async(req,res,next)=>{
     //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
@@ -29,7 +16,7 @@ router.get('/:tiporicetta',async(req,res,next)=>{
     //ottengo i dati associati tramite query
     try{
         const tipo_ricetta_data=await modello.find({});
-        res.json(tipo_ricetta_data);
+        res.status(200).json(tipo_ricetta_data);
     }
     catch(err){
         next(err); //passo l'errore al middleware handler
@@ -39,6 +26,7 @@ router.get('/:tiporicetta',async(req,res,next)=>{
 
 
 router.post("/registrazione",async(req,res,next)=>{
+    console.log("hi")
     const user_data={
         username:req.body.username,
         password:req.body.password,
@@ -46,7 +34,7 @@ router.post("/registrazione",async(req,res,next)=>{
     }
     try{
         await registration(user_data);
-        res.status(200).json({result: response});
+        res.status(200).redirect('/');
     }
     catch(error){
         next(error);
