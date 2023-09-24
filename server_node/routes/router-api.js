@@ -31,11 +31,13 @@ router.post("/registrazione",async(req,res,next)=>{
         password:req.body.password,
         email:req.body.email
     }
+    console.log("Qui")
     try{
         await registration(user_data);
         res.status(200).redirect('/');
     }
     catch(error){
+        console.log(error);
         next(error);
     }
 });

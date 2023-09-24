@@ -16,10 +16,12 @@ import RecepiesCard from './components/RecepiesCard';
 import SelectedRecepie from './components/SelectedRecepies';
 import Registrati from './routes/Registrati';
 import PaginaPersonale from './routes/PaginaPersonale';
+import NotFoundPage from './components/404Page';
 import './index.css';
 
 
 const router=createBrowserRouter([
+
   {
     path: "/",
     element:  <ErrorBoundary fallback={<CompErr/>}><Homepage /></ErrorBoundary>,
@@ -87,12 +89,17 @@ const router=createBrowserRouter([
   {
     path:'/paginapersonale/:id',
     element:<PaginaPersonale/>
-  }
+  },
+
+  {
+    path:"*", /*404 route*/
+    element:<NotFoundPage/>
+  },
 
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+  <RouterProvider router={router}/>
   </React.StrictMode>
 )

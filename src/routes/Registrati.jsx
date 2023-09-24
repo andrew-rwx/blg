@@ -22,27 +22,30 @@ function Registrati(){
     };
 
     async function handleSubmit(event){
-        event.preventDefault();
-        const response=await fetch("/api/registrazione",{
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(utente)
-        });
         try{
+        
+            event.preventDefault();
+            const response=await fetch("/api/registrazione",{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(utente)
+            });
+            console.log(response);
+        
             if(!response.ok){
-            
                 const error_message=await response.json();
+                console.log(error_message);
                 throw new Error(error_message);        
-        }
+            }
         
         }
         catch(err){
             setErrorState(()=>{
                 throw err;
             });
-        }
+        } //forzo il rerendering per attivare l'errorBoundary(che lavora in fase di rendering del genitore)
 
     }
             
