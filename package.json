@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    
     "dev-front": "vite",
-    "start":"nodemon server_node/server.js",
+    "start": "nodemon server_node/server.js",
     "dev-back": "node server_node/server.js",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
@@ -21,6 +20,7 @@
     "mongoose": "^7.5.0",
     "node-fetch": "^3.3.2",
     "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0"

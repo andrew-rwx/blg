@@ -15,6 +15,7 @@ import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
 import SelectedRecepie from './components/SelectedRecepies';
 import Registrati from './routes/Registrati';
+import Accedi from './routes/Accedi';
 import PaginaPersonale from './routes/PaginaPersonale';
 import NotFoundPage from './components/404Page';
 import './index.css';
@@ -84,6 +85,10 @@ const router=createBrowserRouter([
     element:  <ErrorBoundary fallback={<CompErr/>}><Registrati/></ErrorBoundary>,
     errorElement:<ErrorPage/>
 
+  },
+  {
+    path:'/accedi',
+    element:<ErrorBoundary fallback={<CompErr/>}><Accedi/></ErrorBoundary>
   },
 
   {

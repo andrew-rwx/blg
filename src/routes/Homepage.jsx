@@ -15,6 +15,7 @@ function Homepage(){
             </div>
         
                 <Link to="/registrati">Registrati</Link>
+                <Link to="/accedi">Accedi</Link>
               
             
             <div id="cards-container">

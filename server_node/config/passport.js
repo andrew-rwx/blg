@@ -1,15 +1,16 @@
 import passport from "passport";
-import { Strategy } from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-passport.use('local',new Strategy(async function verify(username,password,done){
+passport.use(new LocalStrategy(async function verify(username,password,done){
     try{
+        console.log("sono in passport");
         const user_found=await User.findOne({username: username});
         if(!user_found){
             return done(null,false,{message:"Utente non presente"}); //utente non presente
         }
     
-        const password_match=await bcrypt.compare(password,user.password);
+        const password_match=await bcrypt.compare(password,user_found.password);
         if(!password_match){
             return done(null,false,{message:"Password errata"});
         }
