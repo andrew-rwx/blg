@@ -43,7 +43,7 @@ function RecepiesCard(){
                         ingredienti={ricetta.ingredienti}
                         preparazione={ricetta.preparazione}
                         />
-                        </Link> 
+                        </Link>
                     ))
                 }
               </div>

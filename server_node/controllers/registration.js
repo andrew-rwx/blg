@@ -9,6 +9,12 @@ const saltRounds=10;
     if(password.length<8){
         throw new CustomError("La password deve contenere almeno 8 caratteri",400);
     }
+    else{
+        const regex_success=/^[a-zA-Z0-9_\-\.]+$/.test(password);
+        if(!regex_success){
+            throw new CustomError("La password supporta i seguenti caratteri: a-z A-Z 0-9 - _ .",400);
+        }
+    }
 
 
 try{

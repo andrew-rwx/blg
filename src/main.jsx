@@ -13,7 +13,7 @@ import ErrorPage from './routes/ErrorPage';
 import Homepage from './routes/Homepage.jsx';
 import Ricette from './routes/Ricette.jsx'
 import RecepiesCard from './components/RecepiesCard';
-import SelectedRecepie from './components/SelectedRecepies';
+import SelectedRecepie from './components/SelectedRecepie';
 import Registrati from './routes/Registrati';
 import Accedi from './routes/Accedi';
 import PaginaPersonale from './routes/PaginaPersonale';
@@ -76,8 +76,21 @@ const router=createBrowserRouter([
 
   },
 
-  { path: '/ricette/:id/:id_ricetta',
-    element:  <SelectedRecepie/>
+  { loader:async({params})=>{
+    try{
+      const id_ricetta=params.id_ricetta;
+      await fetch('/api/loadcomments',{
+        method:'POST',
+        body:JSON.stringify(id_ricetta)
+      })
+      }
+      catch(err){
+        throw new Response(err,{status:err.status});
+      }
+    },
+    path: '/ricette/:id/:id_ricetta',
+    element:  <SelectedRecepie/>,
+    errorElement:<ErrorPage/>
   }, 
 
   {

@@ -3,10 +3,9 @@ import CustomError from '../utils/CustomError.js';
 const PORT=process.env.PORT_BACK;
 
 async function error_handler(error,req,res,next){
-        console.log("qui")
-        if (error instanceof CustomError) { //TODO
+        if (error instanceof CustomError) { 
             const status_code=error.status;
-            res.status(status_code).json({message:error.message})
+            res.status(status_code).json({message:error.message});
         }
         else{
            

@@ -11,6 +11,8 @@ function Registrati(){
         email:''
     })
 
+    const[signupError,setSignupError]=useState('');
+
     const navigate=useNavigate();
     function handleInputChange(event){
         const{name,value}=event.target;
@@ -35,9 +37,14 @@ function Registrati(){
             console.log(response);
         
             if(!response.ok){
+                if(response.status===400){
+                    const error_message=await response.json();
+                    setSignupError(error_message.message);
+                }
+                else{
                 const error_message=await response.json();
-                console.log(error_message);
-                throw new Error(error_message);        
+                throw new Error(error_message);
+                }
             }
         
         }
@@ -49,7 +56,7 @@ function Registrati(){
 
     }
             
-    return(
+    return( <>
             <form  className="registrazione-form" action="/api/registrazione" method="post" onSubmit={handleSubmit}>
                 <label  htmlFor="user" >Username:</label>
                 <input
@@ -77,10 +84,13 @@ function Registrati(){
 
                 <input
                     type="submit"
-                    value="Invia"       
+                    value="Invia"
+                    disabled={(utente.username === '' || utente.password === '') ? true : false}         
                 />
 
             </form>
+            <div className="signup-error">{signupError}</div>
+            </>
         
     )
 }

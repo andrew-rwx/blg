@@ -3,6 +3,7 @@ import 'dotenv/config';
 import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
 import passport from "../config/passport.js";
+import RecComment from "../models/RecepiesComments.js";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
@@ -44,9 +45,32 @@ router.post("/registrazione",async(req,res,next)=>{
 
 
 router.post("/accedi",passport.authenticate('local'),(req,res)=>{
-        res.status(200);
+        res.status(200).redirect('/');
     }
 );
+
+router.post("/writecomment",async(req,res)=>{
+    try{
+        const {req_id,message}=req.body;
+
+    }
+    catch(err){
+        next(err);
+    }
+})
+
+router.post("/loadcomments",async(req,res)=>{
+    try{
+        const rec_id=req.body;
+        const comments=await RecComment.findOne({recepie_id:rec_id});
+        res.send(200).json(comments);
+    }
+    catch(err){
+        next(err);
+    }
+    
+
+}) //carica i commenti dal db e invia al frontend;
    
 
 export default router;

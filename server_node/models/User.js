@@ -12,13 +12,7 @@ const user_schema=new mongoose.Schema({
     },
             
     password:{  type:String,
-                required:true,
-                validate:{
-                    validator:function(password){
-                        return /^[a-zA-Z0-9_\-\.]+$/.test(password)
-                    },
-                    message: "Invalid password"
-                }
+                required:true
     },
 
     email:{ type:String,
@@ -27,7 +21,7 @@ const user_schema=new mongoose.Schema({
                 validator:function(email){
                     return /^[a-zA-Z0-9_\-\.]+\@[a-z]+\.[a-z]+$/.test(email)
                 },
-                message: "Invalid user format"
+                message: "Invalid email format"
             }
     },
         
