@@ -43,18 +43,10 @@ router.post("/registrazione",async(req,res,next)=>{
 });
 
 
-router.post("/accedi",passport.authenticate('local',
-    (err,user,info)=>{
-        if(err){
-            next(err);
-        }
-        if (!user){
-            res.status(401).json(info.message);
-        }}
-    ),
-(req,res)=>{
-        res.status(200).json({isConnected:true});
-
-});
+router.post("/accedi",passport.authenticate('local'),(req,res)=>{
+        res.status(200);
+    }
+);
+   
 
 export default router;

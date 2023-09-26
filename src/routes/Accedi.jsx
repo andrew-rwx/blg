@@ -10,6 +10,8 @@ function Accedi(){
         password:''
     });
 
+    const[loginError,setLoginError]=useState("");
+
     const navigate=useNavigate();
     function handleInputChange(event){
         const{name,value}=event.target;
@@ -33,10 +35,8 @@ function Accedi(){
             });
             console.log(response);
         
-            if(!response.ok){
-                const error_message=await response.json();
-                console.log(error_message);
-                throw new Error(error_message);        
+            if(response.status===401){
+                setLoginError("Nome utente o password errata");       
             }
 
             else{
@@ -53,6 +53,7 @@ function Accedi(){
     }
 
     return(
+        <>
         <form  className="accedi-form" action="/api/accedi" method="post" onSubmit={handleSubmit}>
             <label  htmlFor="user" >Username:</label>
             <input
@@ -73,6 +74,10 @@ function Accedi(){
                 type="submit"
                 value="Invia"       
             />
-        </form>)
+        </form>
+        <div className="login-error">
+            {loginError}
+        </div>
+        </>)
 }
 export default Accedi;
