@@ -8,7 +8,7 @@ const PORT=process.env.PORT_FRONT;
 const router=express.Router();
 
 
-router.get('/:tiporicetta',async(req,res,next)=>{
+router.get('/ricette/:tiporicetta',async(req,res,next)=>{
     //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
     const tipo_ricetta=req.params.tiporicetta;
     const modello=ricette_helper[tipo_ricetta];

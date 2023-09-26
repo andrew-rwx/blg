@@ -53,7 +53,7 @@ const router=createBrowserRouter([
         loader:async({params})=>{
           const id=params.id;
           try{
-            const response=await fetch(`/api/${id}`);
+            const response=await fetch(`/api/ricette/${id}`);
             if(!response.ok){
               const error_message=await response.json();
               throw new Response(error_message,{status:response.status});

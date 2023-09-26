@@ -20,7 +20,7 @@ function Accedi(){
             [name]:value
 
         })
-    };
+    };      
 
     async function handleSubmit(event){
         try{
@@ -72,7 +72,8 @@ function Accedi(){
             />
             <input
                 type="submit"
-                value="Invia"       
+                value="Invia"
+                disabled={(utente.username === '' || utente.password === '') ? true : false}       
             />
         </form>
         <div className="login-error">
