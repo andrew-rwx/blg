@@ -5,6 +5,7 @@ import CustomError from "../utils/CustomError.js";
 async function registration(user_data){
 const {username,password,email}=user_data;
 const saltRounds=10;
+
     if(password.length<8){
         throw new CustomError("La password deve contenere almeno 8 caratteri",400);
     }
