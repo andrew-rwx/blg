@@ -79,10 +79,13 @@ const router=createBrowserRouter([
   { loader:async({params})=>{
     try{
       const id_ricetta=params.id_ricetta;
-      await fetch('/api/loadcomments',{
+      const response=await fetch('/api/loadcomments',{
         method:'POST',
         body:JSON.stringify(id_ricetta)
       })
+      const data=await response.json();
+      data.id_ricetta=id_ricetta;
+      return data; //commenti + var connected=true/false
       }
       catch(err){
         throw new Response(err,{status:err.status});

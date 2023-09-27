@@ -3,7 +3,8 @@ import 'dotenv/config';
 import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
 import passport from "../config/passport.js";
-import RecComment from "../models/RecepiesComments.js";
+import RecComment from "../models/RecComments.js";
+import { connect } from "mongoose";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
@@ -49,9 +50,16 @@ router.post("/accedi",passport.authenticate('local'),(req,res)=>{
     }
 );
 
-router.post("/writecomment",async(req,res)=>{
+router.put("/writecomment",async(req,res,next)=>{
     try{
         const {req_id,message}=req.body;
+        const response=await RecComment.findOneAndUpdate(
+            {recepie_id:req_id},
+            { $push:{comments:message}},
+            {new:true}
+        );
+
+        res.status(200);
 
     }
     catch(err){
@@ -59,11 +67,25 @@ router.post("/writecomment",async(req,res)=>{
     }
 })
 
-router.post("/loadcomments",async(req,res)=>{
-    try{
-        const rec_id=req.body;
-        const comments=await RecComment.findOne({recepie_id:rec_id});
-        res.send(200).json(comments);
+router.post("/loadcomments",async(req,res,next)=>{
+    try{ 
+        let connected=false;    
+        if(req.session){
+            connected=true;
+        } //dirà a react se caricare con render condizionale l'opzione Accedi/Registrati connected=false o Scrivi un commento connected=true;
+        const recepie_id=req.body.id_ricetta;
+        const recepie_comments=await RecComment.findOne({recepie_id:recepie_id});
+        if(recepie_comments==[]){
+            res.send(200).json("Non ci sono commenti disponibili");
+        }
+        else{
+            comments_data={
+                comments:recepie_comments.comments,
+                connected: connected
+            }
+            res.send(200).json(comments_data);
+        }
+       
     }
     catch(err){
         next(err);
