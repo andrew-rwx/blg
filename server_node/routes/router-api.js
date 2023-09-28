@@ -4,7 +4,9 @@ import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
 import passport from "../config/passport.js";
 import RecComment from "../models/RecComments.js";
-import { connect } from "mongoose";
+import isAuth from "../middleware/isAuth.js";
+import regen from "../utils/regen.js";
+
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
@@ -45,10 +47,11 @@ router.post("/registrazione",async(req,res,next)=>{
 });
 
 
-router.post("/accedi",passport.authenticate('local'),(req,res)=>{
+router.post("/accedi",passport.authenticate('local',regen),(req,res)=>{
         res.status(200).redirect('/');
     }
 );
+
 
 router.put("/writecomment",async(req,res,next)=>{
     try{
@@ -57,7 +60,7 @@ router.put("/writecomment",async(req,res,next)=>{
             {recepie_id:req_id},
             { $push:{comments:message}},
             {new:true}
-        );
+        ); //inserisco il commento nella ricetta associata
 
         res.status(200);
 
@@ -76,12 +79,11 @@ router.post("/loadcomments",async(req,res,next)=>{
         const recepie_id=req.body.id_ricetta;
         const recepie_comments=await RecComment.findOne({recepie_id:recepie_id});
         if(recepie_comments==[]){
-            res.send(200).json("Non ci sono commenti disponibili");
+            res.send(200).json({message:"Non ci sono commenti disponibili"});
         }
         else{
             comments_data={
-                comments:recepie_comments.comments,
-                connected: connected
+                comments:recepie_comments.comments
             }
             res.send(200).json(comments_data);
         }

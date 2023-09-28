@@ -1,6 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import{
   createBrowserRouter,
   RouterProvider
@@ -20,7 +19,7 @@ import PaginaPersonale from './routes/PaginaPersonale';
 import NotFoundPage from './components/404Page';
 import './index.css';
 
-
+//todo: prendere le loader function da loaders.js per chiarezza codice
 const router=createBrowserRouter([
 
   {
