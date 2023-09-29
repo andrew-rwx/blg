@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import Card from  '../components/Card';
 import Carosel from "../components/Carosel";
 import "./Homepage.css"
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 function Homepage(){
-
+    const user_data=useLoaderData();
     //[] una volta per render verrà chiamato useEffect
         return(
         <>   
@@ -13,11 +13,15 @@ function Homepage(){
                 <h1>La ninfea di Raganella</h1>
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
             </div>
-        
-                <Link to="/registrati">Registrati</Link>
-                <Link to="/accedi">Accedi</Link>
+                {user_data===false?
+                    (<React.Fragment>
+                        <Link to="/registrati">Registrati</Link>
+                        <Link to="/accedi">Accedi</Link>
+                    </React.Fragment>
+                        )
+                    :(<Link to={`/paginapersonale/${user_data.username}`}>{user_data.username}</Link>)
+                }
               
-            
             <div id="cards-container">
                 <div className="card-wrapper">
                     <Link to="/ricette">

@@ -5,8 +5,8 @@ import registration from "../controllers/registration.js";
 import RecComment from "../models/RecComments.js";
 import passport from "passport";
 import isAuth from "../middleware/isAuth.js";
-import regen from "../utils/regen.js";
-
+import "../config/jwt-strategy.js";
+import logintoken from "../config/jwt-strategy.js";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
@@ -47,10 +47,14 @@ router.post("/registrazione",async(req,res,next)=>{
 });
 
 
-router.post("/accedi",passport.authenticate('local'),(req,res,next)=>{
+router.post("/accedi",async(req,res,next)=>{
         try{
-            regen(req); //regen della session per prevenire session fixation
-            res.status(200).redirect('/');
+            const user_data={
+                username:req.body.username,
+                password:req.body.password,
+            }
+            const token=await logintoken(user_data, res)
+            res.status(200).json({token:token}); 
         }
         catch(err){
             next(err);

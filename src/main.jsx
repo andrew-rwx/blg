@@ -17,14 +17,30 @@ import Registrati from './routes/Registrati';
 import Accedi from './routes/Accedi';
 import PaginaPersonale from './routes/PaginaPersonale';
 import NotFoundPage from './components/404Page';
+import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage}from "./loaders";
 import './index.css';
 
 //todo: prendere le loader function da loaders.js per chiarezza codice
 const router=createBrowserRouter([
 
-  {
+  { loader:function loaderHomePage(){
+    const token=localStorage.getItem("token");
+    if(token){
+      const token_parts=token.split(".") //header-payload-signature
+      if(token_parts.length===3){//len valida di un token
+        const payload=JSON.parse(atob(token_parts[1]));
+        console.log(payload);
+        return payload;
+      }
+      else{
+        throw new Error;
+      }
+    }
+    else{return false}
+  },
     path: "/",
     element:  <ErrorBoundary fallback={<CompErr/>}><Homepage /></ErrorBoundary>,
+    errorElement:<ErrorPage/>
 
   },
 

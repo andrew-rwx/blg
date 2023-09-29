@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 function Accedi(){
@@ -33,14 +33,15 @@ function Accedi(){
                 },
                 body: JSON.stringify(utente)
             });
-            console.log(response);
-        
-            if(response.status===401){
-                setLoginError("Nome utente o password errata");       
+            const data=await response.json();
+            if(response.ok){
+                const token=data.token;
+                localStorage.setItem("token",token);
+                navigate("/"); //imposto token  e mi dirigo alla home
             }
-
-            else{
-                window.location.href=response.url;
+            if(response.status===401){
+                const loginfaild_msg=data.message;
+                setLoginError(loginfaild_msg); //inserisco messaggio di errore Username o password invalidi      
             }
         
         }

@@ -27,7 +27,7 @@ passport.use(new LocalStrategy(async function verify(username,password,done){
 passport.serializeUser(function(user_found,done){
     done(null,user_found._id);
 })
-//specifica cosa aggiungere nell'oggetto Session standard che express-session creerà
+//specifica cosa aggiungere nell'oggetto Session standard che express-session salverà
 
 passport.deserializeUser(async function(user_found,done){
     done(null,user_found);

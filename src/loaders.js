@@ -1,6 +1,36 @@
 import Cookies from "js-cookie";
 
 
+function loaderHomePage(){
+  const token=localStorage.getItem("token");
+  if(token){
+    const token_parts=token.split(".") //header-payload-signature
+    if(token_parts.length===3){//len valida di un token
+      const payload=JSON.parse(atob(token_parts[1]));
+      return payload;
+    }
+    else{
+      throw new Error;
+    }
+  }
+}
+
+async function loaderPaginaPersonale(){
+  const token=localStorage.getItem("token");
+  if(token){
+    const response=await fetch("/api/paginapersonale",{
+      method:"POST",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }); //chiedo la valutazione del token nell header
+  }
+  else{
+    throw new Response("Non autorizzato",400);
+  }
+  
+}
 async function loaderRecepiesCard({params}){
     const id=params.id;
     try{
@@ -42,4 +72,4 @@ async function loaderSelectedRecepie({params}){
     }
 
 
-export{loaderRecepiesCard,loaderSelectedRecepie};
+export{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage};
