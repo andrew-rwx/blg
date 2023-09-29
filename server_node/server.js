@@ -5,7 +5,7 @@ import session from "express-session";
 import session_obj from "./db/session_obj.js";
 import api_router from "./routes/router-api.js";
 import error_handler from "./middleware/error_handler.js";
-import passport from "passport";
+import passport from "./config/passport.js";
 
 const app=express();
 app.use(express.static("/public"));

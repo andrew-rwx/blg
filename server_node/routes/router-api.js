@@ -2,8 +2,8 @@ import express from "express";
 import 'dotenv/config';
 import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
-import passport from "../config/passport.js";
 import RecComment from "../models/RecComments.js";
+import passport from "passport";
 import isAuth from "../middleware/isAuth.js";
 import regen from "../utils/regen.js";
 
@@ -47,8 +47,15 @@ router.post("/registrazione",async(req,res,next)=>{
 });
 
 
-router.post("/accedi",passport.authenticate('local',regen),(req,res)=>{
-        res.status(200).redirect('/');
+router.post("/accedi",passport.authenticate('local'),(req,res,next)=>{
+        try{
+            regen(req); //regen della session per prevenire session fixation
+            res.status(200).redirect('/');
+        }
+        catch(err){
+            next(err);
+        }
+        
     }
 );
 
