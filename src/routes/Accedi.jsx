@@ -34,6 +34,7 @@ function Accedi(){
                 body: JSON.stringify(utente)
             });
             const data=await response.json();
+            console.log(response);
             if(response.ok){
                 const token=data.token;
                 localStorage.setItem("token",token);

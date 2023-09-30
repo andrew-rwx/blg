@@ -11,8 +11,8 @@ async function error_handler(error,req,res,next){
            
                 console.log(error);
                 const error_response={
-                    status:'500',
-                    message:'Ooops,qualcosa è andato storto!'
+                    status:"500",
+                    message:"Ooops,qualcosa è andato storto!"
                 };
                 res.status(500).json(error_response);
             }

@@ -17,27 +17,19 @@ import Registrati from './routes/Registrati';
 import Accedi from './routes/Accedi';
 import PaginaPersonale from './routes/PaginaPersonale';
 import NotFoundPage from './components/404Page';
-import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage}from "./loaders";
+import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale}from "./loaders";
 import './index.css';
 
-//todo: prendere le loader function da loaders.js per chiarezza codice
+
+//GESTIONE ERRORI:
+//401: gestito con errore element se loader,o con visualizzazione a schermo se nel componente 
+//404:Route dedicata
+//500: raggruppa molti errori per un approccio generico.Utilizzo ErrorElement se loader o ErrorBoundary se componente
+//Errori interni nei componenti o errori di render dei componenti:ErrorBoundary
+//TODO: gestire il 404 del backend
 const router=createBrowserRouter([
 
-  { loader:function loaderHomePage(){
-    const token=localStorage.getItem("token");
-    if(token){
-      const token_parts=token.split(".") //header-payload-signature
-      if(token_parts.length===3){//len valida di un token
-        const payload=JSON.parse(atob(token_parts[1]));
-        console.log(payload);
-        return payload;
-      }
-      else{
-        throw new Error;
-      }
-    }
-    else{return false}
-  },
+  { loader:loaderHomePage,
     path: "/",
     element:  <ErrorBoundary fallback={<CompErr/>}><Homepage /></ErrorBoundary>,
     errorElement:<ErrorPage/>
@@ -122,9 +114,10 @@ const router=createBrowserRouter([
     element:<ErrorBoundary fallback={<CompErr/>}><Accedi/></ErrorBoundary>
   },
 
-  {
+  { loader:loaderPaginaPersonale,
     path:'/paginapersonale/:id',
-    element:<PaginaPersonale/>
+    element:<PaginaPersonale/>,
+    errorElement:<ErrorPage/>
   },
 
   {

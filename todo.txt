@@ -1,0 +1,6 @@
+1-Throware gli errori nei loader nel formato error={dettagli}
+thow new Error(JSON.stringify(error))
+
+2-Implementare logica di validazione del token prima di permettere scrittura commenti
+
+3-Attuare e migliorare logica dei commenti

@@ -1,36 +1,59 @@
-import Cookies from "js-cookie";
+import handleToken from "./utils/handleToken";
+
 
 
 function loaderHomePage(){
   const token=localStorage.getItem("token");
   if(token){
+    console.log("qui");
     const token_parts=token.split(".") //header-payload-signature
     if(token_parts.length===3){//len valida di un token
       const payload=JSON.parse(atob(token_parts[1]));
-      return payload;
+      const user_data={
+        username:payload.username,
+        email:payload.email
+      }
+      console.log(user_data);
+      
+      return user_data;//verifico solo se il token è presente,nel componente lo valido quando necessario
     }
+  }
     else{
-      throw new Error;
-    }
+      return false; //nessun token presente
+    
   }
 }
 
+//------------------------------------------------------//
+
 async function loaderPaginaPersonale(){
-  const token=localStorage.getItem("token");
-  if(token){
-    const response=await fetch("/api/paginapersonale",{
-      method:"POST",
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+  try{
+    const token=localStorage.getItem("token");
+    if(token){
+      const token_response=await handleToken(token); //output:true/false
+      if(token_response){
+        return token_response; //token presente e valido.
       }
-    }); //chiedo la valutazione del token nell header
+      else{
+          const error={status:401,
+                       message:"Non autorizzato"};
+          throw new Error(error);//server response status 401. Il token non ha superato validazione
+      }
+      
+    }
+    else{
+      const error={status:401,
+                   message:"Non autorizzato"}
+      throw new Error(error);//token non presente accesso negato.
+    }
   }
-  else{
-    throw new Response("Non autorizzato",400);
+  catch(err){
+    throw err;//errore proveniente da handleToken
   }
-  
 }
+
+//---------------------------------------------------//
+
 async function loaderRecepiesCard({params}){
     const id=params.id;
     try{
@@ -60,16 +83,25 @@ async function loaderSelectedRecepie({params}){
       const data=await response.json();
       //todo gestire quando il server manda message:Non ci sono commenti disponibili
       data.id_ricetta=id_ricetta;
-      const sid=Cookies.get('session') || '';
-      if(sid){
-        data.connected=true;
-      }
-      return data; //commenti + var connected=true/false
-      }
-      catch(err){
-        throw new Response(err,{status:err.status});
-      }
+      //se esiste un token lo prendo e verifico l'autenticità
+      const token=localStorage.getItem("token");
+      if(!token){
+        return data; //token non presente
     }
+    else{
+      const token_response=await handleToken(token);
+      if(token_response){
+        data.token_valid=token_response;
+        return data
+      }
+      else{
+        return data
+      }
+    }     
+  }
+  catch(err){
+    throw err;
+  }
+}
 
-
-export{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage};
+export{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale};

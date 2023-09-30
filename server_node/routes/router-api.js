@@ -3,14 +3,11 @@ import 'dotenv/config';
 import ricette_helper from "../models/ricette_helper.js";
 import registration from "../controllers/registration.js";
 import RecComment from "../models/RecComments.js";
-import passport from "passport";
-import isAuth from "../middleware/isAuth.js";
-import "../config/jwt-strategy.js";
+import jwt from "jsonwebtoken";
 import logintoken from "../config/jwt-strategy.js";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
-
 
 router.get('/ricette/:tiporicetta',async(req,res,next)=>{
     //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
@@ -62,6 +59,31 @@ router.post("/accedi",async(req,res,next)=>{
         
     }
 );
+
+
+router.post("/verifytoken",(req,res,next)=>{
+    try{
+        const tokenHeader=req.headers["Authorization"];
+    if(!tokenHeader){
+        //token non presente
+        res.status(401).json({message:"Accesso negato"})
+    }
+    if(!tokenHeader.startsWith("Bearer")){
+        //formato errato
+        res.status(401).json({message:"Accesso negato"});
+    }
+    //se è presente e rispetta il formato lo verifico
+    const token=tokenHeader.substring(7); //tolgo "Bearer+spazio vuoto per ottenere token puro"
+    const TOKEN_STRING=process.env.TOKEN_KEY;
+    const decoded_token=jwt.verify(token,TOKEN_KEY); //verifica che il token sia stato firmato in precedenza
+                                                        //dal server
+    res.status(200).json({valid:true});
+    }
+    catch(err){
+        next(err);
+    }
+    
+});
 
 
 router.put("/writecomment",async(req,res,next)=>{

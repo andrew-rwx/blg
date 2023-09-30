@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import React from 'react';
 import Card from  '../components/Card';
 import Carosel from "../components/Carosel";
 import "./Homepage.css"
 import { Link, useLoaderData } from "react-router-dom";
+
 function Homepage(){
-    const user_data=useLoaderData();
-    //[] una volta per render verrà chiamato useEffect
+    const user_data=useLoaderData(); //dati utenti estratti dal payload del token
         return(
         <>   
             <div className="home-title">
@@ -19,7 +20,7 @@ function Homepage(){
                         <Link to="/accedi">Accedi</Link>
                     </React.Fragment>
                         )
-                    :(<Link to={`/paginapersonale/${user_data.username}`}>{user_data.username}</Link>)
+                    :(<Link to={`/paginapersonale/${user_data.username}`} state={user_data}>{user_data.username}</Link>)
                 }
               
             <div id="cards-container">

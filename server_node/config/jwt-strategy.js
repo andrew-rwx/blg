@@ -2,6 +2,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+//la funzione verifica le credenziali di un utente e se corrette genera un token jws.
 async function logintoken(user_data,res){
     try{
         const{username,password}=user_data;
@@ -14,10 +15,10 @@ async function logintoken(user_data,res){
     if(!password_match){
         res.status(401).json({message:"Username o password errati"});
     }   
-        const TOKEN_STRING=process.env.TOKEN_STRING;
+        const TOKEN_KEY=process.env.TOKEN_KEY;
         var token = jwt.sign({ username:user_found.username,
-                               email:user_found.email}, TOKEN_STRING,{
-                                expiresIn:"8h"
+                               email:user_found.email}, TOKEN_KEY,{
+                               expiresIn:"8h"
                                });
         return token;
     }
