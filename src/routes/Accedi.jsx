@@ -34,21 +34,20 @@ function Accedi(){
                 body: JSON.stringify(utente)
             });
             const data=await response.json();
-            console.log(response);
             if(response.ok){
                 const token=data.token;
                 localStorage.setItem("token",token);
                 navigate("/"); //imposto token  e mi dirigo alla home
             }
             if(response.status===401){
-                const loginfaild_msg=data.message;
-                setLoginError(loginfaild_msg); //inserisco messaggio di errore Username o password invalidi      
+                const loginfailed_msg=data.message; //campo msg dell'oggetto inviato da handlerError dal backend
+                setLoginError(loginfailed_msg); //inserisco messaggio di errore Username o password invalidi      
             }
         
         }
         catch(err){
             setErrorState(()=>{
-                throw err;
+                throw err; //errore 500 o del frontend o del backend
             });
         } //forzo il rerendering per attivare l'errorBoundary(che lavora in fase di rendering del genitore)
 

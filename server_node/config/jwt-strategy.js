@@ -24,7 +24,7 @@ async function logintoken(user_data,res){
     }
     
     catch(err){
-        throw err;
+        throw err; //throw dell'errore a livello di route
     }
 }
 export default logintoken;

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const comments_schema=new mongoose.Schema({
-    recepie_id: String,
+    id_ricetta: String,
     comments: [Object]
 })
 

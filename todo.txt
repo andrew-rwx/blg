@@ -1,6 +1,17 @@
+DONE:
 1-Throware gli errori nei loader nel formato error={dettagli}
-thow new Error(JSON.stringify(error))
+thow new Error(JSON.stringify(error)) DONE
 
-2-Implementare logica di validazione del token prima di permettere scrittura commenti
+2-Implementare logica di validazione del token prima di permettere scrittura commenti DONE
 
-3-Attuare e migliorare logica dei commenti
+3-Attuare e migliorare logica dei commenti DONE
+
+
+TODO:
+1-bug dei path si aggiunge un / tornando indietro con la freccia
+
+2-risolvere problemi cliccando torna a home rimane errorBoundary
+
+3-passare i dati ricetta tramite state e poi salvarli su localStorage non permette di gestire il caso in cui 
+  un utente entra tramite path diretto. Se pulisco il localStorage dai dati non piu utili al cambio di route e non passo per il
+   <Link>(RecepiesCard.jsx riga 36)contenente lo state ci sarà errore. Usare React.Context?

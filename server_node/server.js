@@ -9,7 +9,7 @@ import error_handler from "./middleware/error_handler.js";
 const app=express();
 app.use(express.static("/public"));
 app.use(express.urlencoded({extended:true}));
-app.use(express.json());
+app.use(express.json());//parsing automatico body in formato json dal frontend
 app.use('/api',api_router);//router
 app.use(error_handler);//error_handling middleware
 

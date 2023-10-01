@@ -58,9 +58,9 @@ const router=createBrowserRouter([
     children:[
       { 
         loader:async({params})=>{
-          const id=params.id;
+          const tipo_ricetta=params.id;
           try{
-            const response=await fetch(`/api/ricette/${id}`);
+            const response=await fetch(`/api/ricette/${tipo_ricetta}`);
             if(!response.ok){
               const error_message=await response.json();
               throw new Response(error_message,{status:response.status});
@@ -83,23 +83,9 @@ const router=createBrowserRouter([
 
   },
 
-  { loader:async({params})=>{
-    try{
-      const id_ricetta=params.id_ricetta;
-      const response=await fetch('/api/loadcomments',{
-        method:'POST',
-        body:JSON.stringify(id_ricetta)
-      })
-      const data=await response.json();
-      data.id_ricetta=id_ricetta;
-      return data; //commenti + var connected=true/false
-      }
-      catch(err){
-        throw new Response(err,{status:err.status});
-      }
-    },
+  { loader:loaderSelectedRecepie,
     path: '/ricette/:id/:id_ricetta',
-    element:  <SelectedRecepie/>,
+    element:  <ErrorBoundary fallback={<CompErr/>}><SelectedRecepie/></ErrorBoundary>,
     errorElement:<ErrorPage/>
   }, 
 

@@ -9,7 +9,7 @@ async function error_handler(error,req,res,next){
         }
         else{
            
-                console.log(error);
+                console.log(error); //debugging
                 const error_response={
                     status:"500",
                     message:"Ooops,qualcosa è andato storto!"

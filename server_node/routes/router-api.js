@@ -11,8 +11,8 @@ const router=express.Router();
 
 router.get('/ricette/:tiporicetta',async(req,res,next)=>{
     //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
-    const tipo_ricetta=req.params.tiporicetta;
-    const modello=ricette_helper[tipo_ricetta];
+    const {tiporicetta}=req.params;
+    const modello=ricette_helper[tiporicetta];
     
     //ottengo i dati associati tramite query
     try{
@@ -63,18 +63,18 @@ router.post("/accedi",async(req,res,next)=>{
 
 router.post("/verifytoken",(req,res,next)=>{
     try{
-        const tokenHeader=req.headers["Authorization"];
-    if(!tokenHeader){
-        //token non presente
-        res.status(401).json({message:"Accesso negato"})
-    }
-    if(!tokenHeader.startsWith("Bearer")){
-        //formato errato
-        res.status(401).json({message:"Accesso negato"});
-    }
+        const tokenHeader=req.header("Authorization");
+        if(!tokenHeader){
+            //token non presente
+            res.status(401).json({message:"Accesso negato"})
+        }
+        if(!tokenHeader.startsWith("Bearer")){
+            //formato errato
+            res.status(401).json({message:"Accesso negato"});
+        }
     //se è presente e rispetta il formato lo verifico
     const token=tokenHeader.substring(7); //tolgo "Bearer+spazio vuoto per ottenere token puro"
-    const TOKEN_STRING=process.env.TOKEN_KEY;
+    const TOKEN_KEY=process.env.TOKEN_KEY;
     const decoded_token=jwt.verify(token,TOKEN_KEY); //verifica che il token sia stato firmato in precedenza
                                                         //dal server
     res.status(200).json({valid:true});
@@ -88,14 +88,26 @@ router.post("/verifytoken",(req,res,next)=>{
 
 router.put("/writecomment",async(req,res,next)=>{
     try{
-        const {req_id,message}=req.body;
-        const response=await RecComment.findOneAndUpdate(
-            {recepie_id:req_id},
-            { $push:{comments:message}},
+        const {data_comment}=req.body;
+        console.log(data_comment);
+        //gestire casistiche ricetta nuova mai inizializzata oppure gia presente in DB
+        //caso  ricetta già presente:
+        const recepie_comments=await RecComment.findOneAndUpdate(
+            {id_ricetta:data_comment.id_ricetta},
+            { $push:{comments:data_comment.comment_info} },
             {new:true}
         ); //inserisco il commento nella ricetta associata
+        //ricetta mai inizializzata
+        if(!recepie_comments){
+            const commenti_ricetta=new RecComment({
+                id_ricetta:data_comment.id_ricetta,
+                comments:data_comment.comment_info
+            });
+            await commenti_ricetta.save();
+            
+        }
 
-        res.status(200);
+        res.sendStatus(200);
 
     }
     catch(err){
@@ -105,20 +117,14 @@ router.put("/writecomment",async(req,res,next)=>{
 
 router.post("/loadcomments",async(req,res,next)=>{
     try{ 
-        let connected=false;    
-        if(req.session){
-            connected=true;
-        } //dirà a react se caricare con render condizionale l'opzione Accedi/Registrati connected=false o Scrivi un commento connected=true;
-        const recepie_id=req.body.id_ricetta;
-        const recepie_comments=await RecComment.findOne({recepie_id:recepie_id});
-        if(recepie_comments==[]){
-            res.send(200).json({message:"Non ci sono commenti disponibili"});
+        const {id_ricetta}=req.body;// mi serve per trovare il documento corretto nella collection
+        const recepie_comments=await RecComment.findOne({id_ricetta:id_ricetta});
+        if(!recepie_comments){ //ricetta mai inizializzata quindi commenti non presenti
+            res.status(200).json({comments:"Non ci sono commenti disponibili"});
         }
         else{
-            comments_data={
-                comments:recepie_comments.comments
-            }
-            res.send(200).json(comments_data);
+            const comments_data=recepie_comments.comments; //prendo solo il campo comments che mi interessa
+            res.status(200).json({comments:comments_data});
         }
        
     }

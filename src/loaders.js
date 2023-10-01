@@ -1,23 +1,25 @@
 import handleToken from "./utils/handleToken";
+import getJwtPayload from "./utils/getJwtPayload";
 
 
 
 function loaderHomePage(){
   const token=localStorage.getItem("token");
   if(token){
-    console.log("qui");
-    const token_parts=token.split(".") //header-payload-signature
-    if(token_parts.length===3){//len valida di un token
-      const payload=JSON.parse(atob(token_parts[1]));
-      const user_data={
-        username:payload.username,
-        email:payload.email
+      const payload=getJwtPayload(token);
+      if(payload){//output: payload or false se il token formato errato
+        const user_data={
+          username:payload.username,
+          email:payload.email
+        }
+        return user_data;//il token è presente e nel formato corretto.
       }
-      console.log(user_data);
+      else{
+        return false //getJwtPayload ha returnato false quindi formato token errato. Il loader returna false
+      }
       
-      return user_data;//verifico solo se il token è presente,nel componente lo valido quando necessario
+     
     }
-  }
     else{
       return false; //nessun token presente
     
@@ -37,18 +39,18 @@ async function loaderPaginaPersonale(){
       else{
           const error={status:401,
                        message:"Non autorizzato"};
-          throw new Error(error);//server response status 401. Il token non ha superato validazione
+          throw new Error(JSON.stringify(error));//server response status 401. Il token non ha superato validazione
       }
       
     }
     else{
       const error={status:401,
                    message:"Non autorizzato"}
-      throw new Error(error);//token non presente accesso negato.
+      throw new Error(JSON.stringify(error));//token non presente accesso negato.
     }
   }
   catch(err){
-    throw err;//errore proveniente da handleToken
+    throw err;//error 500 proveniente da handleToken()
   }
 }
 
@@ -72,35 +74,52 @@ async function loaderRecepiesCard({params}){
     }  
 }
 
+//-------------------------------------------------//
 
 async function loaderSelectedRecepie({params}){
     try{
       const id_ricetta=params.id_ricetta;
       const response=await fetch('/api/loadcomments',{
         method:'POST',
-        body:JSON.stringify(id_ricetta)
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body:JSON.stringify({id_ricetta:id_ricetta})
       })
-      const data=await response.json();
-      //todo gestire quando il server manda message:Non ci sono commenti disponibili
-      data.id_ricetta=id_ricetta;
-      //se esiste un token lo prendo e verifico l'autenticità
-      const token=localStorage.getItem("token");
-      if(!token){
-        return data; //token non presente
-    }
-    else{
-      const token_response=await handleToken(token);
-      if(token_response){
-        data.token_valid=token_response;
-        return data
+      const data=await response.json();//contiene l'array dei commenti, il messaggio commenti non presenti
+                                       //o un messaggio di errore dal middleware errorhanlder
+      if(response.ok){
+          const token=localStorage.getItem("token");
+          console.log(token);
+          if(!token){
+            data.id_ricetta=id_ricetta; //porto il param della ricetta nel loader
+            data.foundtoken=false; //specifico che il token non è presente per il render condizionale
+            console.log(data);
+            return data; //token non presente invio solo oggetto contentente commenti + param
+          }
+          else{
+            data.id_ricetta=id_ricetta; //porto il param della ricetta nel loader
+            data.foundtoken=true; //specifico che il token è presente per il render condizionale
+            return data;
+         }
       }
-      else{
-        return data
-      }
+       
+    if(response.status===500){
+      throw new Error(JSON.stringify(data)); //oggetto restiutio middleware errorhanlder
     }     
   }
   catch(err){
-    throw err;
+    const generic_error={
+      status:"500",
+      message:"Ooops,qualcosa è andato storto!"
+    }
+    if(err.message===generic_error){
+      throw err; //500 backend
+    }
+    else{
+      console.log(err);//debugging
+      throw new Error(JSON.stringify(generic_error)); //500 frontend generico
+    }
   }
 }
 

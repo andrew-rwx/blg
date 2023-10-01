@@ -7,12 +7,16 @@ import { Link, useLoaderData } from "react-router-dom";
 
 function Homepage(){
     const user_data=useLoaderData(); //dati utenti estratti dal payload del token
+    function logout(event){
+        localStorage.removeItem("token");
+    }
         return(
         <>   
             <div className="home-title">
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
                 <h1>La ninfea di Raganella</h1>
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
+                <Link to="/" onClick={logout}>Sconnettiti</Link>
             </div>
                 {user_data===false?
                     (<React.Fragment>
