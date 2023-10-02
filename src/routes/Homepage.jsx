@@ -4,7 +4,7 @@ import Card from  '../components/Card';
 import Carosel from "../components/Carosel";
 import "./Homepage.css"
 import { Link, useLoaderData } from "react-router-dom";
-
+//il link a pagina personale non ha validazioni nel loader di homepage perché viene validato quando cliccato
 function Homepage(){
     const user_data=useLoaderData(); //dati utenti estratti dal payload del token
     function logout(event){
@@ -16,15 +16,17 @@ function Homepage(){
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
                 <h1>La ninfea di Raganella</h1>
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
-                <Link to="/" onClick={logout}>Sconnettiti</Link>
             </div>
                 {user_data===false?
-                    (<React.Fragment>
-                        <Link to="/registrati">Registrati</Link>
-                        <Link to="/accedi">Accedi</Link>
-                    </React.Fragment>
+                    (<div className="accedi-registrati">
+                        <Link to="/registrati" id="registrati">Registrati</Link>
+                        <Link to="/accedi" id="accedi">Accedi</Link>
+                    </div>
                         )
-                    :(<Link to={`/paginapersonale/${user_data.username}`} state={user_data}>{user_data.username}</Link>)
+                    :(  <div className="username-disconnetti">
+                            <Link to={`/paginapersonale/${user_data.username}`} state={user_data}>{user_data.username}</Link>
+                            <Link to="/" onClick={logout}>Sconnettiti</Link>
+                        </div>)
                 }
               
             <div id="cards-container">

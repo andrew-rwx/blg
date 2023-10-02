@@ -34,18 +34,20 @@ function Registrati(){
                 },
                 body: JSON.stringify(utente)
             });
-            console.log(response);
-        
-            if(!response.ok){
-                if(response.status===400){
+            if(response.ok){
+                navigate("/");
+            }
+    
+            if(response.status===400){
                     const error_message=await response.json();
                     setSignupError(error_message.message);
-                }
-                else{
-                const error_message=await response.json();
-                throw new Error(error_message);
-                }
             }
+
+            if(response.status===500){
+                const backend_erro=await response.json();
+                throw new Error(error_message);
+            }
+            
         
         }
         catch(err){

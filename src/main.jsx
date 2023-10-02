@@ -32,11 +32,13 @@ const router=createBrowserRouter([
 
   { loader:loaderHomePage,
     path: "/",
-    element:  <ErrorBoundary fallback={<HomeErr/>}><Homepage /></ErrorBoundary>,
+    element:<ErrorBoundary fallback={<CompErr/>}>
+            <Homepage />
+            </ErrorBoundary>,
     errorElement:<ErrorPage/>
 
   },
-  
+
   {
     path: "/ricette",
     element:  <Ricette/>,
@@ -54,19 +56,21 @@ const router=createBrowserRouter([
 
   { loader:loaderSelectedRecepie,
     path: '/ricette/:tiporicetta/:id_ricetta',
-    element:  <ErrorBoundary fallback={<CompErr/>}><SelectedRecepie/></ErrorBoundary>,
+    element: <SelectedRecepie/>,
     errorElement:<ErrorPage/>
   }, 
 
   {
     path: '/registrati',
-    element:  <ErrorBoundary fallback={<CompErr/>}><Registrati/></ErrorBoundary>,
+    element:  <Registrati/>,
     errorElement:<ErrorPage/>
 
   },
   {
     path:'/accedi',
-    element:<ErrorBoundary fallback={<CompErr/>}><Accedi/></ErrorBoundary>
+    element:<ErrorBoundary fallback={<CompErr/>}>
+              <Accedi/>
+            </ErrorBoundary>
   },
 
   { loader:loaderPaginaPersonale,

@@ -51,10 +51,10 @@ router.post("/registrazione",async(req,res,next)=>{
         password:req.body.password,
         email:req.body.email
     }
-    console.log("Qui")
     try{
-        await registration(user_data);
-        res.status(200).redirect('/');
+        //throwa un errore personalizzato all'error handler or true;
+        const registration_done=await registration(user_data);
+        res.status(200),JSON({registration_result:registration_done});
     }
     catch(error){
         console.log(error);
@@ -69,8 +69,8 @@ router.post("/accedi",async(req,res,next)=>{
                 username:req.body.username,
                 password:req.body.password,
             }
-            const token=await logintoken(user_data, res)
-            res.status(200).json({token:token}); 
+            const token=await logintoken(user_data, res);//token or throw errore personalizzato
+                res.status(200).json({token:token}); 
         }
         catch(err){
             next(err);

@@ -17,8 +17,7 @@ function loaderHomePage(){
       else{
         return false //getJwtPayload ha returnato false quindi formato token errato. Il loader returna false
       }
-      
-     
+        
     }
     else{
       return false; //nessun token presente

@@ -2,6 +2,8 @@ import { Link, useFetcher, useLoaderData, useLocation, useNavigate, useParams } 
 import { useCallback, useEffect, useState } from "react";
 import handleToken from "../utils/handleToken";
 import getJwtPayload from "../utils/getJwtPayload";
+import formatDateAndTime from "../utils/formatDateandTime";
+import "./SelectedRecepie.css";
 //todo gestire il render condizionale quando non ci sono commenti disponibili
 
 function SelectedRecepie(event){
@@ -10,6 +12,7 @@ function SelectedRecepie(event){
     const location=useLocation();
     const navigate=useNavigate();
     const [errorState, setErrorState] = useState();//stato per il triggher dell'errorBoundary
+    const[login_modal_hidden,setLoginModalHidden]=useState(true);
 
     //RICETTA 
     const current_location=location.pathname;
@@ -66,7 +69,8 @@ function SelectedRecepie(event){
             const token_valid=await handleToken(token); //validazione backend
             if(token_valid){
                 const payload=getJwtPayload(token);//recupero token per ottenere username
-                const current_date=new Date();
+                const date=new Date();
+                const current_date=formatDateAndTime(date);
                 const comment_info={
                     date:current_date,
                     username:payload.username,
@@ -94,6 +98,9 @@ function SelectedRecepie(event){
                 }
         
             }
+            else{
+                setLoginModalHidden(false);
+            }
         }
         catch(err){
             //la fallback dell'ErrorBoundler mostra solo un 500 generico
@@ -106,7 +113,9 @@ function SelectedRecepie(event){
             <div>
                 <h1>{ricetta.titolo}</h1>
             </div>
-            <img src={ricetta.src} alt={ricetta.alt}></img>
+            <div className="img-container">
+                <img src={ricetta.src} alt={ricetta.alt}></img>
+            </div>
             <p>100 gr di farina...</p>
             {
                 comments===no_comments?(
@@ -142,6 +151,12 @@ function SelectedRecepie(event){
             </form>):
             (<Link to="/">Accedi o registrati per commentare</Link>)
             }
+            <div className={`login-modal-${login_modal_hidden?"hidden":"view"}`} hidden={login_modal_hidden}>
+                <p>La tua connessione è scaduta</p>
+                <Link to="/accedi">Effettua l'accesso</Link>
+                <p>oppure</p>
+                <Link to="/">Torna alla Home</Link>
+            </div>
             
         </div>
     )

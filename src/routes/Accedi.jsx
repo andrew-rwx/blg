@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { set } from "mongoose";
+import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 
@@ -11,6 +12,7 @@ function Accedi(){
     });
 
     const[loginError,setLoginError]=useState("");
+
 
     const navigate=useNavigate();
     function handleInputChange(event){
@@ -33,15 +35,20 @@ function Accedi(){
                 },
                 body: JSON.stringify(utente)
             });
-            const data=await response.json();
             if(response.ok){
-                const token=data.token;
+                const token_data=await response.json(); //contiene il token
+                const token=token_data.token;
                 localStorage.setItem("token",token);
                 navigate("/"); //imposto token  e mi dirigo alla home
             }
             if(response.status===401){
-                const loginfailed_msg=data.message; //campo msg dell'oggetto inviato da handlerError dal backend
-                setLoginError(loginfailed_msg); //inserisco messaggio di errore Username o password invalidi      
+                const fail_msg=await response.json();
+                const loginfailed_msg=fail_msg.message; //campo msg dell'oggetto inviato da handlerError dal backend
+                setLoginError(loginfailed_msg);//inserisco messaggio di errore Username o password invalidi      
+            }
+            if(response.status===500){
+                const backend_error=await response.json();
+                throw new Error(JSON.stringify(backend_error));
             }
         
         }

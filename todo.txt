@@ -16,8 +16,8 @@ thow new Error(JSON.stringify(error)) DONE
 
 
 TODO:
-
-//gestire se token scaduto mostrare schermata che dice di riconnetersi
+//risolvere problemi cliccando torna a home rimane errorBoundary. DONE
+//finire la modale del login
 
 
 

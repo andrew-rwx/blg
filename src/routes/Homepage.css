@@ -18,3 +18,12 @@ a{
 
 }
 
+.accedi-registrati{
+    display: flex;
+    gap:5px;
+}
+
+.username-disconnetti{
+    display: flex;
+    gap:5px;
+}
