@@ -57,16 +57,17 @@ async function loaderPaginaPersonale(){
 //---------------------------------------------------//
 
 async function loaderRecepiesCard({params}){
-    const id=params.id;
+    const tiporicetta=params.tiporicetta;
     try{
-      const response=await fetch(`/api/ricette/${id}`);
-      if(!response.ok){
-        const error_message=await response.json();
-        throw new Response(error_message,{status:response.status});
+      const response=await fetch(`/api/ricette/${tiporicetta}`);
+      if(response.ok){
+        const data=await response.json();//array contenente gli oggetti richiesti;
+        const ricette=data.ricette;
+        return ricette;
       }
       else{
-        const data=await response.json();
-        return data;
+        const error_message=await response.json();
+        throw new Response(error_message,{status:response.status});
       }
     }
     catch(err){
@@ -86,26 +87,27 @@ async function loaderSelectedRecepie({params}){
         },
         body:JSON.stringify({id_ricetta:id_ricetta})
       })
-      const data=await response.json();//contiene l'array dei commenti, il messaggio commenti non presenti
-                                       //o un messaggio di errore dal middleware errorhanlder
+      
       if(response.ok){
+        const data=await response.json();//contiene l'array dei commenti, il messaggio commenti non presenti
+                                         //o un messaggio di errore dal middleware errorhanlder
           const token=localStorage.getItem("token");
-          console.log(token);
-          if(!token){
+          if(token){
+            data.id_ricetta=id_ricetta; //porto il param della ricetta nel loader
+            data.foundtoken=true; //specifico che il token è presente per il render condizionale
+            return data;
+          }
+          else{
             data.id_ricetta=id_ricetta; //porto il param della ricetta nel loader
             data.foundtoken=false; //specifico che il token non è presente per il render condizionale
             console.log(data);
             return data; //token non presente invio solo oggetto contentente commenti + param
-          }
-          else{
-            data.id_ricetta=id_ricetta; //porto il param della ricetta nel loader
-            data.foundtoken=true; //specifico che il token è presente per il render condizionale
-            return data;
          }
       }
        
     if(response.status===500){
-      throw new Error(JSON.stringify(data)); //oggetto restiutio middleware errorhanlder
+      const error_message=await response.json();
+      throw new Error(JSON.stringify(error_message)); //oggetto restiutio middleware errorhanlder
     }     
   }
   catch(err){
@@ -114,6 +116,7 @@ async function loaderSelectedRecepie({params}){
       message:"Ooops,qualcosa è andato storto!"
     }
     if(err.message===generic_error){
+      console.log("Errore dal backend");
       throw err; //500 backend
     }
     else{

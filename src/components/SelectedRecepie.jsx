@@ -1,5 +1,5 @@
-import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useFetcher, useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import handleToken from "../utils/handleToken";
 import getJwtPayload from "../utils/getJwtPayload";
 //todo gestire il render condizionale quando non ci sono commenti disponibili
@@ -10,35 +10,59 @@ function SelectedRecepie(event){
     const location=useLocation();
     const navigate=useNavigate();
     const [errorState, setErrorState] = useState();//stato per il triggher dell'errorBoundary
-    const[comment,setComment]=useState({text:""});//text commento
 
-    const ricetta=location.state.ricetta; //recupero informazioni sulla ricetta
+    //RICETTA 
+    const current_location=location.pathname;
+    const[ricetta,setRicetta]=useState({});
+    const id_ricetta=data.id_ricetta; //recupero informazioni sulla ricetta
+    const {tiporicetta}=useParams();
+    useEffect(()=>{
+        async function fetchData(){
+            try{
+                if(location.state&&location.state.ricetta){
+                    setRicetta(location.state.ricetta); //caso in cui si è passati dal Link in RecepiesCard
+                }
+                else{
+                    const response=await fetch(`/api/ricetta/${tiporicetta}/${id_ricetta}`,{
+                        method:"POST"
+                    });
+                    if(response.ok){
+                        const data=await response.json();//array contenente gli oggetti richiesti;
+                        setRicetta(data.dati_ricetta);
+                        location.state.ricetta=data.dati_ricetta;
+                    }   
+                    else{
+                        const error_message=await response.json();
+                        throw error_message
+                    }
+                }
+            }
+            catch(err){
+                setErrorState(()=>{
+                    throw err})
+            }
+        }
+        fetchData();
+
+    },[]);
 
 
-
-    const id_ricetta=data.id_ricetta;
+    //COMMENTI
     const comments=data.comments;
     const foundtoken=data.foundtoken;
+    const[comment_text,setCommentText]=useState("");//text commento
     const no_comments="Non ci sono commenti disponibili";
+    function createComment(event){setCommentText(event.target.value)};
+    useEffect(()=>{
+        setCommentText("");
+    },[data]); //uso i dati del loader come criterio
     
-    
-    
-                                            
-
-
-
-    function createComment(event){
-        setComment({
-            text:event.target.value
-        });
-    }
 
     async function writeComment(event){
         try{     
             event.preventDefault();
             //controllo la validità del token
             const token=localStorage.getItem("token");
-            console.log(token);
             const token_valid=await handleToken(token); //validazione backend
             if(token_valid){
                 const payload=getJwtPayload(token);//recupero token per ottenere username
@@ -46,7 +70,7 @@ function SelectedRecepie(event){
                 const comment_info={
                     date:current_date,
                     username:payload.username,
-                    text:comment.text
+                    text:comment_text
                 }
 
                 const data_comment={
@@ -108,7 +132,7 @@ function SelectedRecepie(event){
                     id="user-comment"
                     name="comment"
                     placeholder="Commenta questa ricetta..."
-                    value={comment.text}
+                    value={comment_text}
                 
                 />
                 <button 

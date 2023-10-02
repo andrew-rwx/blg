@@ -16,8 +16,8 @@ router.get('/ricette/:tiporicetta',async(req,res,next)=>{
     
     //ottengo i dati associati tramite query
     try{
-        const tipo_ricetta_data=await modello.find({});
-        res.status(200).json(tipo_ricetta_data);
+        const tipo_ricetta_data=await modello.find({});//cerco tutte le ricette nella Collection associata
+        res.status(200).json({ricette:tipo_ricetta_data});
     }
     catch(err){
         next(err); //passo l'errore al middleware handler
@@ -25,6 +25,25 @@ router.get('/ricette/:tiporicetta',async(req,res,next)=>{
 
 });
 
+//route per caricare estrapolare i dati da una ricetta specifica
+router.post('/ricetta/:tiporicetta/:id_ricetta',async(req,res,next)=>{
+    try{
+        const{tiporicetta,id_ricetta}=req.params;
+        const modello=ricette_helper[tiporicetta];
+        const dati_ricetta_array=await modello.find({_id:id_ricetta});
+        if(dati_ricetta_array){
+            const dati_ricetta=dati_ricetta_array[0];
+            res.status(200).json({dati_ricetta:dati_ricetta});
+        }
+        else{
+            throw new Error("Ricetta non presente nel DB"); //la ricetta deve essere presente nel DB
+        }
+    }
+    catch(err){
+        next(err);
+    }
+   
+})
 
 router.post("/registrazione",async(req,res,next)=>{
     const user_data={

@@ -7,6 +7,7 @@ import{
 
 
 import ErrorBoundary from './components/ErrorBoundary';
+import HomeErr from './components/HomeErr';
 import CompErr from './components/CompErr';
 import ErrorPage from './routes/ErrorPage';
 import Homepage from './routes/Homepage.jsx';
@@ -31,50 +32,18 @@ const router=createBrowserRouter([
 
   { loader:loaderHomePage,
     path: "/",
-    element:  <ErrorBoundary fallback={<CompErr/>}><Homepage /></ErrorBoundary>,
+    element:  <ErrorBoundary fallback={<HomeErr/>}><Homepage /></ErrorBoundary>,
     errorElement:<ErrorPage/>
 
   },
-
-  { loader:async()=>{   
-      try{  
-            console.log("Hi");
-            const error_data=await fetch("/api/error");
-            console.log("done");
-            return error_data;
-      }
-      catch(e){
-        console.log(e)
-      };
-    },
-    
-    path:"/errorpage",
-    element:<ErrorPage/>,
-    
-  },
+  
   {
     path: "/ricette",
     element:  <Ricette/>,
     children:[
       { 
-        loader:async({params})=>{
-          const tipo_ricetta=params.id;
-          try{
-            const response=await fetch(`/api/ricette/${tipo_ricetta}`);
-            if(!response.ok){
-              const error_message=await response.json();
-              throw new Response(error_message,{status:response.status});
-            }
-            else{
-              const data=await response.json();
-              return data;
-            }
-          }
-          catch(err){
-            throw new Response(err,{status:err.status});
-          }  
-      },
-        path: '/ricette/:id',
+        loader:loaderRecepiesCard,
+        path: '/ricette/:tiporicetta',
         element:  <RecepiesCard />,
         errorElement:<ErrorPage/>
       }
@@ -84,7 +53,7 @@ const router=createBrowserRouter([
   },
 
   { loader:loaderSelectedRecepie,
-    path: '/ricette/:id/:id_ricetta',
+    path: '/ricette/:tiporicetta/:id_ricetta',
     element:  <ErrorBoundary fallback={<CompErr/>}><SelectedRecepie/></ErrorBoundary>,
     errorElement:<ErrorPage/>
   }, 
