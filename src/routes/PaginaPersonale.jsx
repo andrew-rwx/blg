@@ -1,45 +1,32 @@
-import { useState } from "react";
-import { useLocation } from "react-router";
+import { useState,useEffect } from "react";
+import { useLocation,useLoaderData } from "react-router";
 import { Link } from "react-router-dom";
+import getJwtPayload from "../utils/getJwtPayload";
 
 function PaginaPersonale(){
+    const token=useLoaderData();
     const location=useLocation();
-    cost[user,setUser]=useState({});
+    const[user,setUser]=useState({
+        username:"",
+        email:"",
+        commenti:{}
+    });
     useEffect(()=>{
         async function fetchData(){
-            try{
-                if(location.state&&location.state.user_data){
-                    setUser(location.state.ricetta); //caso in cui si è passati dal Link in RecepiesCard
-                }
-                else{
-                    
-                    const response_user=await fetch("")
-
-                    const response=await fetch(`/api/ricetta/${tiporicetta}/${id_ricetta}`,{
-                        method:"POST"
-                    });
-                    if(response.ok){
-                        const data=await response.json();//array contenente gli oggetti richiesti;
-                        console.log("rimonto il componente");
-                        console.log(comment_text);
-                        setRicetta(data.dati_ricetta);
-                    }
-                    else{
-                        const error_message=await response.json();
-                        throw error_message
-                    }
-                }
-            }
-            catch(err){
-                setErrorState(()=>{
-                    throw err})
-            }
+            const payload=getJwtPayload(token);
+            const {username,email}=payload;
+            const user_comment=await fetch(`/api/load_user_comments/${username}`,{
+                method:"POST"
+            });
+            setUser({
+                ...user,
+                username:username,
+                email:email
+            });
         }
         fetchData();
 
-    }  ,[current_location]);
-    const user=location.state.user_data;//prendo i valori dal token passati da state da Homepage
-    
+    }  ,[]);
     function userLogout(event){
         localStorage.removeItem("token"); //procedura di logout
     }

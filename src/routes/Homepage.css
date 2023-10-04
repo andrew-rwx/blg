@@ -1,4 +1,12 @@
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+};
 
+
+.home-title-img-right{
+    animation: bounce 0.5s infinite alternate;
+}
 
 h1{
     text-align: center;

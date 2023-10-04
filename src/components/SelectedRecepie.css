@@ -1,25 +1,230 @@
-.img-container{
-    width: 200px;
-    height: 200px;
+
+.ricetta-data{ /*lv0*/
+    /*body:100%->root:100%->ricetta-data:100%*/ 
+    height: 100%;
+
+}
+.ricetta-data>h1{/*lv1*/
+/*body:100%->root:100%->ricetta-data:100->h1%*/
+    text-align: center;
+    margin-top: 4%; /*altezza del nav*/
+    height: 4%;
+}
+.img-container{/*lv1*/
+    /*body:100%->root:100%->ricetta-data:100%->.img-container*/
+    margin-top: 5%;
+    height: 83%; /*div padre: ricetta-data */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
 }
 
-.img-container img{
-    max-width: 100%;
-    max-height: 100%;
+.img-container>img{/*lv2*/
+    /*body:100%->root:100%->ricetta-data:100%->.img-container->(.img-container>img)*/
+    max-width: 50%;
+    max-height: 50%;
+}
+
+/*---------------------------*/
+.recepie-and-comments{/*lv1*/
+     /*body->root->.ricetta-data->.recepie-and-comments*/
+    box-sizing: border-box;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: 100%;
+    display: flex;
+}
+
+.preparazione-ricetta{/*lv2*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.preparazione-ricetta*/
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    margin-right: 2%;
+    height:100% ;
 }
 
 
+.preparazione-ricetta>h1{/*lv3*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.preparazione-ricetta*->h1*/
+    width:auto;
+    height: 3%;
+    font-size: 2em;
+    text-align: left;
+}
+
+.preparazione-ricetta>p{/*lv3*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.preparazione-ricetta*->p*/
+    min-width: 50%;
+    height: 93%;
+    padding: 2%;
+    border: 2px solid var(--melon);
+    background-color: var(--burlywood);
+    overflow-y: auto;
+    
+}
+
+
+
+
+
+
+/*Stile comment box*/
+.comments-and-write-comment{/*lv1*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment*/
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    margin-left: 2%;
+    height: 100%;
+}
+
+
+.recepie-comment-box{/*lv2*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.recepie-comment-box*/
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 80%;
+}
+
+.write-comment{/*lv2*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.write-comment*/
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    height: 20%;
+}
+.write-comment>textarea{
+    width: 100%;
+    height: 80%;
+}
+.write-comment>button{
+    width: 35%;
+    height:20%;
+    margin-bottom: 5%;
+    color: bisque;
+}
+.write-comment>button>p{
+    height: auto;
+}
+/*---------------*/
+
+
+.no-recepie-comment-box{/*lv2*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.no-recepie-comment-box*/
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 96%;
+}
+.comments-and-write-comment>a{/*lv2*/
+    width: 80%;
+    height: 2%;
+    margin-top:2%;
+    color: var(--persian-green);
+}
+
+.comments-and-write-comment>a :hover{
+    color: var(--burlywood);
+}
+.recepie-comment-box>h1{/*lv3* Commenti:/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.recepie-comment-box->h1*/
+    text-align: justify;
+    height: auto;
+    font-size: 2em;
+}
+
+
+.no-recepie-comment-box>h1{/*lv3* Commenti:*/
+     /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.no-recepie-comment-box->h1*/
+    text-align: justify;
+    height: 4%;
+    font-size: 2em;
+}
+
+.primo-a-commentare{/*lv3*/
+ /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.no-recepie-comment-box->.primo-a-commentare*/
+    display: flex;
+    flex-direction: column;
+    height: 94%;
+    margin-top: 2%;
+}
+.comments-and-write-comment>a{/*lv2* Accedi o registrati/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->a*/
+    height: auto;
+}
+.recepie-comment-list{/*lv3*/
+    /*body->root->.ricetta-data->.recepie-and-comments->.comments-and-write-comment->.recepie-comment-box->.recepie-comment-list*/
+    height:auto ;
+    display: flex;
+    flex-direction: column;
+}
+
+.recepie-comment{
+    width: 45%;
+    height: auto;
+    border-bottom: 3px solid var(--melon);
+    margin-bottom: 2%;
+    background-color: var(--burlywood);
+}
+
+
+.username-date-comment{/*username ora*/
+    display: flex;
+    flex-wrap: nowrap;
+    gap:5px;
+}
+
+
+/*--------------*/
+
+
+
+
+/*Stile modale tokenscaduto*/
 .login-modal-hidden{
     display: none;
+    pointer-events: none;
 }
 
 .login-modal-view{
     display: block;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 0; 
+    width: 100%; /*del viewport. Il parent in fixed è viewport*/
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente */
     z-index: 1000; /* Imposta un valore di z-index superiore */
 }
+
+.login-modal-text{
+    position: fixed;
+    top: 50%; /*posizionerà lo spigolo superiore del div al 50% dell'altezza del parent(viewport in questo caso)*/
+    left: 50%; /* Posizionerà lo spigolo sinistro del div al 50% della lunghezza del parent(viewport in questo caso) */
+    transform: translate(-50%, -50%); /* Sposta il figlio di -50% della sua larghezza e altezza */
+    border: 2px solid #23967fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+
+    
+}
+
+.login-modal-text>p{
+    text-align: center;
+}
+.login-modal-text>a{
+    text-align: center;
+    text-decoration: none; /* Rimuovi la sottolineatura del link */
+    transition: color 0.2s; /* Aggiungi una transizione per il cambio di colore */
+}
+
+      
+      /* Stile al passaggio del mouse */
+.login-modal-text>a:hover {
+    color: #0056b3; /* Cambia colore al passaggio del mouse */
+}
+

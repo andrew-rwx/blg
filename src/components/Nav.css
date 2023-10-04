@@ -1,0 +1,12 @@
+nav{
+    position: fixed;
+    z-index: 100;
+    top:0;
+    margin-top: 1%;
+    width: 99%;
+    margin-right:1%;
+    height: 3%;
+    display: flex;
+    justify-content: flex-end;/*destra*/
+    gap:5px;
+}

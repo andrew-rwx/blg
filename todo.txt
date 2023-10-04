@@ -14,10 +14,13 @@ thow new Error(JSON.stringify(error)) DONE
 
 6-bug dei path si aggiunge un / tornando indietro con la freccia ?Non più presente,da indagare. DONE
 
+7-finire la modale del login DONE
+
 
 TODO:
-//risolvere problemi cliccando torna a home rimane errorBoundary. DONE
-//finire la modale del login
+//risolvere problemi cliccando torna a home rimane errorBoundary. 
+//aggiustare il css
+
 
 
 

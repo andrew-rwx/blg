@@ -5,17 +5,20 @@ async function handleToken(token){
           headers: { "Authorization": `Bearer ${token}`,
                       "Content-Type": "application/json"}
         })
-        const data=await response.json(); //token_data o json response error from error handlerr
         if(response.ok){
-          const token_response=data.valid; //valid:true
+          const token_response=await response.json();
+          const valid_token=token_response.valid; //valid:true
           return token_response //token valid
         }
         if(response.status===401){
-          const token_response=data.valid; //valid:false
-          return token_response; //token not valid
+          const token_invalid_error=await response.json();//errore token non valido.
+          console.log(token_invalid_error.message)
+          const valid_token=false;
+          return valid_token; //token not valid
         }
         if(response.status===500){
-          throw new Error(JSON.stringify(data))//contiene il json di errore del backend
+          const backend_error=await response.json();
+          throw new Error(JSON.stringify(backend_error))//contiene il json di errore del backend
         }
       
     }

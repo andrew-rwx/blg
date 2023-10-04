@@ -33,11 +33,12 @@ async function loaderPaginaPersonale(){
     if(token){
       const token_response=await handleToken(token); //output:true/false
       if(token_response){
-        return token_response; //token presente e valido.
+        return token //token presente e valido.
       }
       else{
           const error={status:401,
                        message:"Non autorizzato"};
+          localStorage.clear("token");
           throw new Error(JSON.stringify(error));//server response status 401. Il token non ha superato validazione
       }
       

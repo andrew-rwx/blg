@@ -1,7 +1,50 @@
-ul{
+/*div livello0*/
+.ricette-pagina{
+    height: 100%;
+}
+/*div livello1*/
+#ricette-wrapper{
+    position: relative;
+    top:7%;
+    height: 93%;
+
+}
+
+/*div livello2*/
+.ricette-nav{
+    position: fixed;
+    width: 30%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+/*div livello2*/
+.ricette-outlet-container{
+    position: absolute;
+    left: 30%;
+    width: 70%;
+    height: auto;
+    margin-top: 1%;
+}
+
+/*div livello3*/
+#ricette-card-wrapper{
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+}
+
+.ricette-nav{
+    width: 20%;
+    height: 100%;
+}
+
+.ricette-nav>ul{
     /* margin-top: 150px; */
-    width: 285px;
-    background-color: burlywood;
+    width: calc(100%-6px); /*bordo dx e sx*/
+    height: 60%;
+    background-color: var(--burlywood);
     border:solid 3px white;
     
 }
@@ -33,25 +76,8 @@ li{
     color: gold;
 }
 
-/*div livello1*/
-.ricette-nav{
-    margin-left: 30px;
-    display: flex;
-    flex-direction: column;
-}
 
 
-/*div livello1*/
-#ricette-card-wrapper{
-    margin-top: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    gap:10px;
-}
 
-/*div livello2*/
-#ricette-wrapper{
-    display: flex;
-    align-items: center;
-    gap:100px;
-}
+
+

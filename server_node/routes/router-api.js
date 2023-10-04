@@ -5,6 +5,8 @@ import registration from "../controllers/registration.js";
 import RecComment from "../models/RecComments.js";
 import jwt from "jsonwebtoken";
 import logintoken from "../config/jwt-strategy.js";
+import CustomError from "../utils/CustomError.js";
+import User from "../models/User.js";
 
 const PORT=process.env.PORT_FRONT;
 const router=express.Router();
@@ -13,7 +15,6 @@ router.get('/ricette/:tiporicetta',async(req,res,next)=>{
     //prendo il valore :id che rappresenta il tipo di ricetta. (Primi,secondi,contorni...)
     const {tiporicetta}=req.params;
     const modello=ricette_helper[tiporicetta];
-    
     //ottengo i dati associati tramite query
     try{
         const tipo_ricetta_data=await modello.find({});//cerco tutte le ricette nella Collection associata
@@ -53,10 +54,11 @@ router.post("/registrazione",async(req,res,next)=>{
     }
     try{
         //throwa un errore personalizzato all'error handler or true;
-        const registration_done=await registration(user_data);
-        res.status(200),JSON({registration_result:registration_done});
+        const registration_token=await registration(user_data);
+        res.status(200).json({registration_result:registration_token});
     }
     catch(error){
+        await User.deleteOne({username:user_data.username});
         console.log(error);
         next(error);
     }
@@ -95,10 +97,16 @@ router.post("/verifytoken",(req,res,next)=>{
     const token=tokenHeader.substring(7); //tolgo "Bearer+spazio vuoto per ottenere token puro"
     const TOKEN_KEY=process.env.TOKEN_KEY;
     const decoded_token=jwt.verify(token,TOKEN_KEY); //verifica che il token sia stato firmato in precedenza
-                                                        //dal server
+                                                     //dal server. Output: token o eccezione se non valido
     res.status(200).json({valid:true});
     }
     catch(err){
+        if(err instanceof jwt.TokenExpiredError){
+            next(new CustomError("La tua connessione è scaduta esegui nuovamente l'accesso",401));
+        }
+        if(err instanceof jwt.JsonWebTokenError){
+            next(new CustomError("La tua connessione è scaduta esegui nuovamente l'accesso",401));
+        }
         next(err);
     }
     
@@ -125,6 +133,14 @@ router.put("/writecomment",async(req,res,next)=>{
             await commenti_ricetta.save();
             
         }
+        const {username}=data_comment.comment_info;
+        const push_in_user_comment_array=await User.findOneAndUpdate(
+            {username:username},
+            {$push:{comments:data_comment.comment_info}}
+        )
+        console.log(push_in_user_comment_array)
+
+
 
         res.sendStatus(200);
 
@@ -153,6 +169,24 @@ router.post("/loadcomments",async(req,res,next)=>{
     
 
 }) //carica i commenti dal db e invia al frontend;
+
+
+router.post("/load_user_comments/:username",async(req,res,next)=>{
+    try{
+        const{username}=req.params;
+        const user=await User.findOne(
+            {username:username}
+            );
+        const user_comments=user.comments;
+        console.log(user_comments);
+        res.status(200).json({comments:user_comments});
+     
+    }
+    catch(err){
+        next(err);
+    }
+    
+})
    
 
 export default router;

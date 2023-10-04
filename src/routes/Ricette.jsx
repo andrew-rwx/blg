@@ -1,45 +1,47 @@
 import { Link, Outlet } from "react-router-dom";
+import Nav from "../components/Nav";
 import "./Ricette.css"
 function Ricette(){
     
     return(
-        <div id="ricette-wrapper">
-            <div className="ricette-nav">
-                <p>Le mie ricette</p>
-                <ul>
-                    <li>
-                        <Link to="/ricette/colazione">Colazione ☕</Link>
-                    </li>
+            <div className="ricette-pagina">
+                <Nav/>
+                <div id="ricette-wrapper">
+                    <div className="ricette-nav">
+                        <p>Le mie ricette</p>
+                        <ul>
+                            <li>
+                                <Link to="/ricette/colazione">Colazione ☕</Link>
+                            </li>
+                            
+                            <li>
+                                <Link to="/ricette/primipiatti">Primi Piatti 🍜</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/ricette/secondipiatti">Secondi Piatti 🧆</Link>
+                            </li>
+                            <li>
+                                <Link to="/ricette/contorni">Contorni 🥗</Link>
+                            </li> 
+
+                            <li>
+                                <Link to="/ricette/dolci">Dolci 🍨</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/ricette/spuntini">Spuntini 🍉</Link>
+                            </li>
+                        </ul>
+                        <Link to="/">Torna alla Home</Link>
+                    </div>
+
+                    <Outlet/>
                     
-                    <li>
-                        <Link to="/ricette/primipiatti">Primi Piatti 🍜</Link>
-                    </li>
 
-                    <li>
-                        <Link to="/ricette/secondipiatti">Secondi Piatti 🧆</Link>
-                    </li>
-                    <li>
-                        <Link to="/ricette/contorni">Contorni 🥗</Link>
-                    </li> 
-
-                    <li>
-                        <Link to="/ricette/dolci">Dolci 🍨</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/ricette/spuntini">Spuntini 🍉</Link>
-                    </li>
-                </ul>
-                <Link to="/">Torna alla Home</Link>
-            </div>
-
-            <div>
-                <Outlet/>
-            </div>
-            
-
+                </div>
         </div>
-    )
+        )
 }
 
 export default Ricette;

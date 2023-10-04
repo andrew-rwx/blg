@@ -35,6 +35,9 @@ function Registrati(){
                 body: JSON.stringify(utente)
             });
             if(response.ok){
+                const registration_response=await response.json();
+                const token=registration_response.registration_result;
+                localStorage.setItem("token",token);
                 navigate("/");
             }
     

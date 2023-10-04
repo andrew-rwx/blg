@@ -1,12 +1,15 @@
 .card-explorer{
-    margin-top: 2em;
+    margin-left: 10px;
+    width: calc(100%-10px);
+    height: 10%;
     display: flex;
-    justify-content: center;
     gap: 4px;
 }
 
 .my-button,.my-button-clicked{
-    margin-bottom: 10px;
+    width: auto;
+    height: 60%;
+    margin-bottom: 2%;
 }
 .my-button-clicked{
     background-color: burlywood;
