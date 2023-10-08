@@ -16,11 +16,12 @@ thow new Error(JSON.stringify(error)) DONE
 
 7-finire la modale del login DONE
 
+8-migliorare css DONE
+
 
 TODO:
 //risolvere problemi cliccando torna a home rimane errorBoundary. 
-//aggiustare il css
-
+// cercare di applicare lazy routing
 
 
 

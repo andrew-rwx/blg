@@ -11,7 +11,7 @@ function Homepage(){
         localStorage.removeItem("token");
     }
         return(
-        <>   
+        <div id="homepage">   
             <div className="home-title">
                 <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
                 <h1>La ninfea di Raganella</h1>
@@ -29,7 +29,7 @@ function Homepage(){
                         </div>)
                 }
               
-            <div id="cards-container">
+            <div className="card-container1">
                 <div className="card-wrapper">
                     <Link to="/ricette">
                     <Card
@@ -44,6 +44,8 @@ function Homepage(){
                     <Carosel />
 
                 </div>
+            </div>
+            <div className="card-container2">
                 <div className="card-wrapper">
                     <Card
                         src="mylife.jpg"
@@ -55,7 +57,7 @@ function Homepage(){
             </div>
 
 
-        </>
+        </div>
       
     )
 }

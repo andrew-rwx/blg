@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import "./Registrati.css";
 
 
 function Registrati(){
@@ -61,41 +63,42 @@ function Registrati(){
 
     }
             
-    return( <>
-            <form  className="registrazione-form" action="/api/registrazione" method="post" onSubmit={handleSubmit}>
-                <label  htmlFor="user" >Username:</label>
-                <input
-                    type="text"
-                    name="username"
-                    value={utente.username}
-                    onChange={handleInputChange}
-                />
+    return( <div className="pagina-registrazione">
+                <Nav/>
+                <form  className="registrazione-form" action="/api/registrazione" method="post" onSubmit={handleSubmit}>
+                    <label  htmlFor="user" >Username:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        value={utente.username}
+                        onChange={handleInputChange}
+                    />
 
-                <label htmlFor="psw" >Password:</label>
-                <input
-                    type="text"
-                    name="password"
-                    value={utente.password}
-                    onChange={handleInputChange}
-                />
-                
-                <label htmlFor="mail" >Email:</label>
-                <input
-                    type="text"
-                    name="email"
-                    value={utente.email}
-                    onChange={handleInputChange}
-                />
+                    <label htmlFor="psw" >Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={utente.password}
+                        onChange={handleInputChange}
+                    />
+                    
+                    <label htmlFor="mail" >Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={utente.email}
+                        onChange={handleInputChange}
+                    />
 
-                <input
-                    type="submit"
-                    value="Invia"
-                    disabled={(utente.username === '' || utente.password === '') ? true : false}         
-                />
+                    <input
+                        type="submit"
+                        value="Invia"
+                        disabled={(utente.username === '' || utente.password === '') ? true : false}         
+                    />
 
-            </form>
-            <div className="signup-error">{signupError}</div>
-            </>
+                </form>
+                <div className="signup-error">{signupError}</div>
+            </div>
         
     )
 }

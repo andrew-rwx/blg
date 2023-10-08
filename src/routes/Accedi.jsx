@@ -1,6 +1,9 @@
 import { set } from "mongoose";
-import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import "../components/Nav.css"
+import "./Accedi.css"
 
 
 function Accedi(){
@@ -61,32 +64,35 @@ function Accedi(){
     }
 
     return(
-        <>
-        <form  className="accedi-form" action="/api/accedi" method="post" onSubmit={handleSubmit}>
-            <label  htmlFor="user" >Username:</label>
-            <input
-                type="text"
-                name="username"
-                value={utente.username}
-                onChange={handleInputChange}
-            />
+        <div className="pagina-accedi">
+            <Nav/>
+            <h1>Accedi:</h1>
+            <form  className="accedi-form" action="/api/accedi" method="post" onSubmit={handleSubmit}>
+                <label  htmlFor="user" >Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    value={utente.username}
+                    onChange={handleInputChange}
+                />
 
-            <label htmlFor="psw" >Password:</label>
-            <input
-                type="text"
-                name="password"
-                value={utente.password}
-                onChange={handleInputChange}
-            />
-            <input
-                type="submit"
-                value="Invia"
-                disabled={(utente.username === '' || utente.password === '') ? true : false}       
-            />
-        </form>
-        <div className="login-error">
-            {loginError}
-        </div>
-        </>)
+                <label htmlFor="psw" >Password:</label>
+                <input
+                    type="password"
+                    name="password"
+                    value={utente.password}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="submit"
+                    value="Invia"
+                    disabled={(utente.username === '' || utente.password === '') ? true : false}       
+                />
+                <Link to="/password-dimenticata">Password dimenticata?</Link>
+            </form>
+            <div className="login-error">
+                {loginError}
+            </div>
+        </div>)
 }
 export default Accedi;

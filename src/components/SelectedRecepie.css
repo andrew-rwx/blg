@@ -7,13 +7,13 @@
 .ricetta-data>h1{/*lv1*/
 /*body:100%->root:100%->ricetta-data:100->h1%*/
     text-align: center;
-    margin-top: 4%; /*altezza del nav*/
-    height: 4%;
+    margin-top: 12vh; /*altezza del nav*/
+    height: 6vh;
 }
 .img-container{/*lv1*/
     /*body:100%->root:100%->ricetta-data:100%->.img-container*/
-    margin-top: 5%;
-    height: 83%; /*div padre: ricetta-data */
+    margin-top: 7vh;
+    height: 75vh; /*div padre: ricetta-data */
     display: flex;
     justify-content: center; /* Centra orizzontalmente */
 }

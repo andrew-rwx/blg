@@ -178,8 +178,12 @@ router.post("/load_user_comments/:username",async(req,res,next)=>{
             {username:username}
             );
         const user_comments=user.comments;
-        console.log(user_comments);
-        res.status(200).json({comments:user_comments});
+        if(user_comments.length===0){
+            throw new CustomError("Non ci sono commenti disponibili",404); //utente non ha mai commentato
+        }
+        else{
+            res.status(200).json({comments:user_comments});
+        }
      
     }
     catch(err){

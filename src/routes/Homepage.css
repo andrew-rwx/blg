@@ -1,12 +1,51 @@
-@keyframes bounce {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10px); }
-};
-
-
-.home-title-img-right{
-    animation: bounce 0.5s infinite alternate;
+#homepage{
+    position: relative;
+    height:100%;
 }
+
+.home-title{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.home-title>h1{
+    height: 100%;
+    font-size:3em;
+}
+.home-title-img-right{
+    max-width: 10%;
+    height: 100%;
+}
+
+.accedi-registrati{
+    position: absolute;
+    top:0;
+    right: 0;
+    width: 13%;
+    margin-right: 0.1%;
+    margin-top: 1%;
+    height: 3%;
+    color: var(--wenge);
+
+}
+
+
+.card-container1{
+    margin-top: 10vh;
+    height: 80vh;
+}
+.card-container1 .card-wrapper{
+    height: 100%;
+}
+
+
+.card-container2{
+    height:90vh;
+    margin-top:10vh;
+}
+
 
 h1{
     text-align: center;
@@ -18,13 +57,7 @@ a{
     text-decoration: none;
 }
 
-.home-title {
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
 
-}
 
 .accedi-registrati{
     display: flex;

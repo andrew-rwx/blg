@@ -1,0 +1,20 @@
+.pagina-registrazione{
+    height: 100%;
+}
+
+.registrazione-form{
+    border: 3px solid burlywood;
+    position: absolute;
+    top:47%;
+    left: 50%;
+    transform: translate(-50%, -50%);;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 40%;
+    border-radius: 2%;
+    gap:4px;
+    background-color: var(--persian-green);
+}

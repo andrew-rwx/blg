@@ -30,14 +30,22 @@ function Nav(){
     return(
 
             <nav>
-                <Link to="/">🏠Home</Link>
-                <Link to="/ricette">🍱Ricette</Link>
-                {
-                thereIsToken?(
-                    <Link to={`/paginapersonale/${username}`}>{username}</Link>
-                    )
-                    :(<Link to="/accedi">👤Accedi</Link>)
-                }
+                <div className="upper-nav"></div>
+                <div className="nav-logo">
+                    <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
+                    <p>La ninfea di Raganella</p>
+                    <img className="home-title-img-right" src="/water-lily.png" alt="lily" />
+                </div>
+                <div className="navigation">
+                    <Link to="/">🏠Home</Link>
+                    <Link to="/ricette">🍱Ricette</Link>
+                    {
+                    thereIsToken?(
+                        <Link to={`/paginapersonale/${username}`}>{username}</Link>
+                        )
+                        :(<Link to="/accedi">👤Accedi</Link>)
+                    }
+                </div>
             </nav>
     )
 }

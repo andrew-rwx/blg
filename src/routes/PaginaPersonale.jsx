@@ -12,21 +12,15 @@ function PaginaPersonale(){
         commenti:{}
     });
     useEffect(()=>{
-        async function fetchData(){
-            const payload=getJwtPayload(token);
-            const {username,email}=payload;
-            const user_comment=await fetch(`/api/load_user_comments/${username}`,{
-                method:"POST"
-            });
-            setUser({
-                ...user,
-                username:username,
-                email:email
-            });
-        }
-        fetchData();
-
-    }  ,[]);
+                const payload=getJwtPayload(token);
+                const {username,email}=payload;
+                setUser({
+                    ...user,
+                    username:username,
+                    email:email}
+                );
+             },[]);
+             
     function userLogout(event){
         localStorage.removeItem("token"); //procedura di logout
     }
@@ -37,7 +31,7 @@ function PaginaPersonale(){
             <div className="right-user-menu">
                 <ul>
                     <li>"Informazioni generali"</li>
-                    <li>I tuoi commenti</li>
+                    <Link to={`${location.pathname}/your-comment`}>I tuoi commenti</Link>
                 </ul>
             </div>
         </div>

@@ -54,6 +54,35 @@ async function loaderPaginaPersonale(){
   }
 }
 
+
+//---------------------------------------------------//
+  async function loaderYourComments(){
+    try{
+    
+        const response=await fetch(`/api/load_user_comments/${username}`,{
+            method:"POST"
+        });
+        if(response.ok){
+          const data=response.json()
+          const user_comments=data.comments;
+          return user_comments
+        }
+        if(response.status===404){
+          const data=response.json()
+          const no_user_comments=data.message;
+          return no_user_comments;
+        }
+      
+    }
+    catch(err){
+      throw err; //500 dal hackend/frontend
+    }
+  }
+
+
+
+
+
 //---------------------------------------------------//
 
 async function loaderRecepiesCard({params}){

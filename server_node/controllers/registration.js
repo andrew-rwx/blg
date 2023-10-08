@@ -18,11 +18,6 @@ const saltRounds=10;
         }
     }
 
-    const email_success=/^[a-zA-Z0-9_\-\.]+\@[a-z]+\.[a-z]+$/.test(email);
-    if(!email_success){
-        throw new CustomError("Inserisci una mail valida",400);
-    }
-
 
 try{
     const user_found=await searchUserInDb(username);

@@ -17,6 +17,7 @@ import SelectedRecepie from './components/SelectedRecepie';
 import Registrati from './routes/Registrati';
 import Accedi from './routes/Accedi';
 import PaginaPersonale from './routes/PaginaPersonale';
+import YourComments from './routes/YourComments';
 import NotFoundPage from './components/404Page';
 import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale}from "./loaders";
 import './index.css';
@@ -76,7 +77,14 @@ const router=createBrowserRouter([
   { loader:loaderPaginaPersonale,
     path:'/paginapersonale/:id',
     element:<PaginaPersonale/>,
-    errorElement:<ErrorPage/>
+    errorElement:<ErrorPage/>,
+    children:[
+      {
+        path:"/paginapersonale/:id/your-comments",
+        element:<YourComments/>,
+        errorElement:<ErrorPage/>
+      }
+    ]
   },
 
   {
