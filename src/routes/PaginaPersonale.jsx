@@ -1,11 +1,13 @@
 import { useState,useEffect } from "react";
-import { useLocation,useLoaderData } from "react-router";
+import { useLocation,useLoaderData,useNavigate} from "react-router";
 import { Link } from "react-router-dom";
 import getJwtPayload from "../utils/getJwtPayload";
 
 function PaginaPersonale(){
     const token=useLoaderData();
     const location=useLocation();
+    const currentlocation=location.pathname;
+    const navigate=useNavigate();
     const[user,setUser]=useState({
         username:"",
         email:"",
@@ -21,8 +23,9 @@ function PaginaPersonale(){
                 );
              },[]);
              
-    function userLogout(event){
+    function userLogout(){
         localStorage.removeItem("token"); //procedura di logout
+        navigate("/");
     }
     return(
         <div className="paginapersonale">
@@ -31,7 +34,7 @@ function PaginaPersonale(){
             <div className="right-user-menu">
                 <ul>
                     <li>"Informazioni generali"</li>
-                    <Link to={`${location.pathname}/your-comment`}>I tuoi commenti</Link>
+                    <Link to={`${currentlocation}/your-comments`}>I tuoi commenti</Link>
                 </ul>
             </div>
         </div>

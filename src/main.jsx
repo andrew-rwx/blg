@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{lazy,Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
 import{
   createBrowserRouter,
@@ -7,20 +7,23 @@ import{
 
 
 import ErrorBoundary from './components/ErrorBoundary';
-import HomeErr from './components/HomeErr';
 import CompErr from './components/CompErr';
 import ErrorPage from './routes/ErrorPage';
-import Homepage from './routes/Homepage.jsx';
-import Ricette from './routes/Ricette.jsx'
-import RecepiesCard from './components/RecepiesCard';
-import SelectedRecepie from './components/SelectedRecepie';
-import Registrati from './routes/Registrati';
-import Accedi from './routes/Accedi';
-import PaginaPersonale from './routes/PaginaPersonale';
-import YourComments from './routes/YourComments';
 import NotFoundPage from './components/404Page';
-import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale}from "./loaders";
+import Homepage from './routes/Homepage.jsx';
+const LazyRicette=lazy(()=>import('./routes/Ricette'));
+const LazyRecepiesCard=lazy(()=>import('./components/RecepiesCard'));
+const LazySelectedRecepie=lazy(()=>import('./components/SelectedRecepie'));
+const LazyRegistrati=lazy(()=>import( './routes/Registrati'));
+const LazyAccedi=lazy(()=>import('./routes/Accedi'));
+const LazyPaginaPersonale=lazy(()=>import('./routes/PaginaPersonale'));
+const LazyYourComments=lazy(()=>import('./routes/YourComments'));
+import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale,loaderYourComments}from "./loaders";
 import './index.css';
+
+
+//LAZY ROUTING: anche se il numero dei miei componenti non è cosi elevato è comunque una buona pratica implementare
+//il lazy routing per migliorare l'esperienza all'utente
 
 
 //GESTIONE ERRORI:
@@ -33,7 +36,8 @@ const router=createBrowserRouter([
 
   { loader:loaderHomePage,
     path: "/",
-    element:<ErrorBoundary fallback={<CompErr/>}>
+    element:
+            <ErrorBoundary fallback={<CompErr/>}>
             <Homepage />
             </ErrorBoundary>,
     errorElement:<ErrorPage/>
@@ -42,12 +46,12 @@ const router=createBrowserRouter([
 
   {
     path: "/ricette",
-    element:  <Ricette/>,
+    element:  <Suspense><LazyRicette/></Suspense>,
     children:[
       { 
         loader:loaderRecepiesCard,
         path: '/ricette/:tiporicetta',
-        element:  <RecepiesCard />,
+        element:  <Suspense><LazyRecepiesCard/></Suspense>,
         errorElement:<ErrorPage/>
       }
     
@@ -57,31 +61,31 @@ const router=createBrowserRouter([
 
   { loader:loaderSelectedRecepie,
     path: '/ricette/:tiporicetta/:id_ricetta',
-    element: <SelectedRecepie/>,
+    element: <Suspense><LazySelectedRecepie/></Suspense>,
     errorElement:<ErrorPage/>
   }, 
 
   {
     path: '/registrati',
-    element:  <Registrati/>,
+    element:  <Suspense><LazyRegistrati/></Suspense>,
     errorElement:<ErrorPage/>
 
   },
   {
     path:'/accedi',
     element:<ErrorBoundary fallback={<CompErr/>}>
-              <Accedi/>
+              <Suspense><LazyAccedi/></Suspense>
             </ErrorBoundary>
   },
 
   { loader:loaderPaginaPersonale,
-    path:'/paginapersonale/:id',
-    element:<PaginaPersonale/>,
+    path:"/paginapersonale/:id",
+    element:<Suspense><LazyPaginaPersonale/></Suspense>,
     errorElement:<ErrorPage/>,
     children:[
-      {
+      { loader:loaderYourComments,
         path:"/paginapersonale/:id/your-comments",
-        element:<YourComments/>,
+        element:<Suspense fallback={console.log("sto caricando")}><LazyYourComments/></Suspense>,
         errorElement:<ErrorPage/>
       }
     ]

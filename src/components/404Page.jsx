@@ -4,7 +4,7 @@ function NotFoundPage(){
     return(
         
         <div className="not-found-page">
-            <img src="Error404.jpg" alt="La pagina che stai cercando non è disponibile!"/>
+            <img src="/Error404.jpg" alt="La pagina che stai cercando non è disponibile!"/>
             <Link to="/">Torna alla Homepage</Link>
         </div>
     )

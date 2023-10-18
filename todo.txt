@@ -18,11 +18,12 @@ thow new Error(JSON.stringify(error)) DONE
 
 8-migliorare css DONE
 
+9-implementato lazy routing
 
 TODO:
 //risolvere problemi cliccando torna a home rimane errorBoundary. 
-// cercare di applicare lazy routing
-
+//risolvere problema lazyRouting componente <LazyYourComments/> nello specifico il componente
+  <YourComments/> non appare nella DOM
 
 
 

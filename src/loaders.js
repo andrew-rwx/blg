@@ -56,15 +56,16 @@ async function loaderPaginaPersonale(){
 
 
 //---------------------------------------------------//
-  async function loaderYourComments(){
+  async function loaderYourComments({params}){
     try{
-    
+        const username=params.id;
         const response=await fetch(`/api/load_user_comments/${username}`,{
             method:"POST"
         });
         if(response.ok){
-          const data=response.json()
+          const data=await response.json()
           const user_comments=data.comments;
+          console.log(user_comments);
           return user_comments
         }
         if(response.status===404){
@@ -75,7 +76,7 @@ async function loaderPaginaPersonale(){
       
     }
     catch(err){
-      throw err; //500 dal hackend/frontend
+      throw err; //500 dal backend/frontend
     }
   }
 
@@ -155,4 +156,4 @@ async function loaderSelectedRecepie({params}){
   }
 }
 
-export{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale};
+export{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale,loaderYourComments};

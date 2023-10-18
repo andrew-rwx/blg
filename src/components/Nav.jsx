@@ -1,9 +1,8 @@
 
 import { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
-import TokenModal from './TokenModal';
 import getJwtPayload from '../utils/getJwtPayload';
-
+import "./Nav.css";
 function Nav(){
     const[thereIsToken,setThereIsToken]=useState(false);
     const[username,setUsername]=useState("");
