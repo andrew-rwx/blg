@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { useLocation,useLoaderData,useNavigate} from "react-router";
-import { Link } from "react-router-dom";
+import { Link,Outlet } from "react-router-dom";
 import getJwtPayload from "../utils/getJwtPayload";
 
 function PaginaPersonale(){
@@ -37,6 +37,7 @@ function PaginaPersonale(){
                     <Link to={`${currentlocation}/your-comments`}>I tuoi commenti</Link>
                 </ul>
             </div>
+            <Outlet/>
         </div>
     )
 }

@@ -9,9 +9,9 @@ function YourComments(){
         <div>
             {your_comments.map((comment,index)=>(
                 <div key={index}>
+                    <p>{comment.date}</p>
                     <p>{comment.username}</p>
                     <p>{comment.text}</p>
-                    <p>{comment.date}</p>
                 </div>
             ))
             }

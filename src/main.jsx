@@ -1,23 +1,16 @@
-import React,{lazy,Suspense} from 'react';
+import React from 'react';
+import {lazy,Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
 import{
   createBrowserRouter,
   RouterProvider
 }from "react-router-dom";
 
-
 import ErrorBoundary from './components/ErrorBoundary';
 import CompErr from './components/CompErr';
 import ErrorPage from './routes/ErrorPage';
 import NotFoundPage from './components/404Page';
 import Homepage from './routes/Homepage.jsx';
-const LazyRicette=lazy(()=>import('./routes/Ricette'));
-const LazyRecepiesCard=lazy(()=>import('./components/RecepiesCard'));
-const LazySelectedRecepie=lazy(()=>import('./components/SelectedRecepie'));
-const LazyRegistrati=lazy(()=>import( './routes/Registrati'));
-const LazyAccedi=lazy(()=>import('./routes/Accedi'));
-const LazyPaginaPersonale=lazy(()=>import('./routes/PaginaPersonale'));
-const LazyYourComments=lazy(()=>import('./routes/YourComments'));
 import{loaderRecepiesCard,loaderSelectedRecepie,loaderHomePage,loaderPaginaPersonale,loaderYourComments}from "./loaders";
 import './index.css';
 
@@ -36,22 +29,26 @@ const router=createBrowserRouter([
 
   { loader:loaderHomePage,
     path: "/",
-    element:
-            <ErrorBoundary fallback={<CompErr/>}>
-            <Homepage />
-            </ErrorBoundary>,
+    element:<Homepage/>,
     errorElement:<ErrorPage/>
 
   },
 
   {
     path: "/ricette",
-    element:  <Suspense><LazyRicette/></Suspense>,
+    lazy:async()=>{
+      const Ricette=await import('./routes/Ricette');
+      return {Component:Ricette.default};
+      
+    },
     children:[
       { 
         loader:loaderRecepiesCard,
         path: '/ricette/:tiporicetta',
-        element:  <Suspense><LazyRecepiesCard/></Suspense>,
+        lazy:async()=>{
+          const RecepiesCard=await import('./components/RecepiesCard');
+          return {Component:RecepiesCard.default};
+        },
         errorElement:<ErrorPage/>
       }
     
@@ -61,31 +58,43 @@ const router=createBrowserRouter([
 
   { loader:loaderSelectedRecepie,
     path: '/ricette/:tiporicetta/:id_ricetta',
-    element: <Suspense><LazySelectedRecepie/></Suspense>,
+    lazy:async()=>{
+      const SelectedRecepie=await import('./components/SelectedRecepie');
+      return {Component:SelectedRecepie.default};
+    },
     errorElement:<ErrorPage/>
   }, 
 
   {
     path: '/registrati',
-    element:  <Suspense><LazyRegistrati/></Suspense>,
+    lazy:async()=>{ const Registrati=await import('./routes/Registrati');
+                    return{Component:Registrati.default}
+    },
     errorElement:<ErrorPage/>
 
   },
   {
     path:'/accedi',
-    element:<ErrorBoundary fallback={<CompErr/>}>
-              <Suspense><LazyAccedi/></Suspense>
-            </ErrorBoundary>
+    lazy:async()=>{const Accedi=await import('./routes/Accedi');
+                   console.log("fatto");
+                   return{Component:Accedi.default}}
   },
 
   { loader:loaderPaginaPersonale,
     path:"/paginapersonale/:id",
-    element:<Suspense><LazyPaginaPersonale/></Suspense>,
+    lazy:async()=>{
+      const PaginaPersonale=await import ('./routes/PaginaPersonale');
+      return{Component:PaginaPersonale.default};
+    },
     errorElement:<ErrorPage/>,
     children:[
       { loader:loaderYourComments,
         path:"/paginapersonale/:id/your-comments",
-        element:<Suspense fallback={console.log("sto caricando")}><LazyYourComments/></Suspense>,
+        lazy:async()=>{
+          const YourComments=await import('./routes/YourComments');
+          console.log(YourComments.default);
+          return{Component:YourComments.default}
+        },
         errorElement:<ErrorPage/>
       }
     ]
@@ -100,6 +109,6 @@ const router=createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-  <RouterProvider router={router}/>
+   <ErrorBoundary fallback={<CompErr/>}><RouterProvider router={router}/></ErrorBoundary>
   </React.StrictMode>
 )
